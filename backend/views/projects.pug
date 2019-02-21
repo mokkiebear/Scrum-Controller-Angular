@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  //Добавление проектов
+  form(method='post' action='/api/projects')
+    p Добавление проектов:
+    input(type='text' name='title' placeholder='title')
+    input(type='submit')
+
+  form(method='put' action='/api/projects')
+    p Изменение проектов:
+    input(type='text' name='title' placeholder='title')
+    input(type='submit')
+    
+  //Скрипт для отображения проектов
+  script.
+    var data = !{JSON.stringify(data)};
+    console.log(data);
+    for(var i = 0; i <  data.length; ++i){
+        var project = document.createElement('div');
+        project.className = 'project';
+        project.innerHTML = "<h2>"+data[i].title+"</h2>";
+        project.innerHTML += "<p>"+data[i].date+"</p>";
+        document.body.appendChild(project);
+    }
+    
