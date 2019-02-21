@@ -5,6 +5,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var morgan = require('morgan');
 const helmet = require('helmet');
+const cors = require('cors');
 
 //Routers
 var indexRouter = require('./routes/index');
@@ -28,6 +29,7 @@ if (app.get('env') === 'development'){
   console.log('Morgan enabled...');
 }
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());

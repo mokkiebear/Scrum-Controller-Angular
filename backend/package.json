@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",
+    "cors": "^2.8.5",
     "debug": "~2.6.9",
     "ejs": "^2.6.1",
     "express": "~4.16.0",
@@ -15,6 +16,6 @@
     "joi": "^14.3.1",
     "mongoose": "^5.4.12",
     "morgan": "~1.9.0",
-    "pug": "2.0.0-beta11"
+    "pug": "^2.0.3"
   }
 }
