@@ -1,0 +1,31 @@
+.mat-card{
+    width: 80%;
+    margin: 0 auto;
+}
+
+table{
+    width: 100%;
+}
+
+
+.mat-column{
+    padding: 5px;
+}
+
+.mat-column-title{
+    font-weight: bold;
+}
+
+.mat-column-right{
+    text-align: center;
+}
+
+.mat-column-dat{
+    font-size: 0.6em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.mat-column-descr{
+    font-size: 0.8em;
+}

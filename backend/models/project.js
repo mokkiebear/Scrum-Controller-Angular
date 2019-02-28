@@ -7,12 +7,13 @@ const Project = mongoose.model('Project', new mongoose.Schema({
 		required: true,
 		maxlength: 50
 	},
-	date: { type: Date, default: Date.now },
-	itterations: [Object]
+	description: {type: String, required: false},
+	iterations: [Object],
+	date: { type: Date, default: Date.now }
 }));
 
 function validateProject(project) {
-	const schema = { title: Joi.string().min(3).required() };
+	const schema = { title: Joi.string().min(3).required(), description: Joi.string().allow('') };
 	return Joi.validate(project, schema);
 }
 

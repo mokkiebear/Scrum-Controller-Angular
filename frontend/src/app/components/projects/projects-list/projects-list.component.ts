@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatTableDataSource } from '@angular/material'
 
-import { Project } from '../../project.model';
-import { ProjectService } from '../../project.service';
+import { Project } from '../../../project.model';
+import { ProjectService } from '../../../project.service';
 
 @Component({
   selector: 'app-projects-list',
@@ -13,14 +13,11 @@ import { ProjectService } from '../../project.service';
 export class ProjectsListComponent implements OnInit {
 
   projects: Project[];
-  displayedColumns = ['title', 'date', 'actions'];
+  displayedColumns = ['title', 'description', 'date', 'actions'];
 
   constructor(private projectService: ProjectService, private router: Router) { }
 
   ngOnInit() {
-    /*this.projectService.getProjects().subscribe((projects) => {
-      console.log('Result',projects);
-    });*/
     this.fetchProjects();
   }
 
@@ -36,6 +33,10 @@ export class ProjectsListComponent implements OnInit {
 
   editProject(id){
     this.router.navigate([`/api/edit/${id}`]);
+  }
+
+  getProject(id){
+    this.projectService.getProjectById(id).subscribe(res => console.log(res));
   }
 
   deleteProject(id){
