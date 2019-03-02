@@ -36,10 +36,9 @@ router.put('/:id', async function (req, res) {
 	//Validate - If invalid, return 400 - Bad Request
 	const { error } = validate(req.body);
 	if (error) return res.status(400).send(error.details[0].message);
-	console.log(req.params.id, req.body.description);
 	try{
 		//Look up the project - If not existing, return 404
-		const project = await Project.findOneAndUpdate( { _id: req.params.id }, { $set: { title: req.body.title, description: req.body.description } }, { new: true });
+		const project = await Project.findOneAndUpdate( { _id: req.params.id }, { $set: { title: req.body.title, description: req.body.description, iterations: req.body.iterations } }, { new: true });
 		//Update the project - Return the updated project
 		res.json(project);
 	}

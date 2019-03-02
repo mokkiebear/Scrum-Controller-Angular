@@ -1,0 +1,22 @@
+<div>
+  <br>
+  <mat-card>
+    <section class='mat-typography'>
+      <h3>Создание итерации</h3>
+    </section>
+    <mat-divider></mat-divider>
+    <br>
+    <form [formGroup]='createIterationForm' class='create-form'>
+      <mat-form-field class='field-full-width'>
+        <input matInput placeholder='Наименование итерации' formControlName='title' #title>
+      </mat-form-field>
+      <br>
+      <mat-form-field class='field-full-width'>
+        <textarea matInput placeholder='Описание' formControlName='description' #description></textarea>
+      </mat-form-field>
+      <br><br>
+      <button mat-raised-button color='accent' [routerLink]="['/project', id]">Назад</button>
+      <button type='submit' (click)='createIteration(title.value, description.value)' [disabled]='createIterationForm.pristine || createIterationForm.invalid' mat-raised-button color='primary'>Сохранить</button>
+    </form>
+  </mat-card>
+</div>

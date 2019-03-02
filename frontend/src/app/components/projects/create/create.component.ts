@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ProjectService } from '../../../project.service';
+import { ProjectService } from '../../../services/project.service';
 
 @Component({
   selector: 'app-create',
@@ -23,7 +23,7 @@ export class CreateComponent implements OnInit {
   createProject(title, description){
     this.projectService.createProject(title, description).subscribe((res) =>{
       console.log(res);
-      this.router.navigate(['api/projects']);
+      this.router.navigate(['/projects']);
     });
   }
 

@@ -1,7 +1,7 @@
 <div>
   <br>
   <mat-card class='mat-card'>
-    <button mat-raised-button color='primary' routerLink='/api/create'>
+    <button mat-raised-button color='primary' routerLink='/projects/create'>
       Создать новый проект
     </button>
     <br><br>
@@ -9,7 +9,7 @@
     <table mat-table [dataSource]='projects' >
       <ng-container matColumnDef='title'>
         <th mat-header-cell *matHeaderCellDef>Название проекта</th>
-        <td mat-cell *matCellDef='let element' class='mat-column mat-column-title' (click)="getProject(element._id)">{{ element.title }}</td>
+        <td mat-cell *matCellDef='let element' class='mat-column mat-column-titl' ><button mat-button color='primary' (click)="openProject(element._id)">{{ element.title | uppercase }}</button></td>
       </ng-container>
 
       <ng-container matColumnDef='description'>
@@ -19,15 +19,14 @@
 
       <ng-container matColumnDef='date'>
           <th mat-header-cell *matHeaderCellDef>Дата создания</th>
-          <td mat-cell *matCellDef='let element' class='mat-column mat-column-dat'>{{ this.formatDate(element.date) }}</td>
+          <td mat-cell *matCellDef='let element' class='mat-column mat-column-dat'>{{ element.date | date: "dd MMMM yyyy" }}</td>
       </ng-container>
         
       <ng-container matColumnDef='actions'>
         <th mat-header-cell *matHeaderCellDef class='mat-column-right'>Действия</th>
         <td mat-cell *matCellDef='let element' class='mat-column mat-column-right'>
-          <button mat-button color='primary' (click)="getProject(element._id)">Просмотреть</button>
           <button mat-button color='primary' (click)="editProject(element._id)">Изменить</button>
-          <button mat-button color='warn' (click)="deleteProject(element._id)">Удалить</button>
+          <button mat-raised-button color='warn' (click)="deleteProject(element._id)">Удалить</button>
         </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

@@ -21,15 +21,22 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CreateComponent } from './components/projects/create/create.component';
 import { EditComponent } from './components/projects/edit/edit.component';
 
-import { ProjectService } from './project.service';
+import { CreateIterationComponent } from './components/iterations/create/create.component';
+
+import { ProjectService } from './services/project.service';
 import { ProjectsListComponent } from './components/projects/projects-list/projects-list.component';
+import { ProjectViewComponent } from './components/projects/project-view/project-view.component';
+
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
     AppComponent,
     CreateComponent,
     EditComponent,
-    ProjectsListComponent
+    ProjectsListComponent,
+    ProjectViewComponent,
+    CreateIterationComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +54,8 @@ import { ProjectsListComponent } from './components/projects/projects-list/proje
     MatCardModule, 
     MatTableModule, 
     MatDividerModule, 
-    MatSnackBarModule
+    MatSnackBarModule,
+    DragDropModule
   ],
   providers: [ProjectService],
   bootstrap: [AppComponent]

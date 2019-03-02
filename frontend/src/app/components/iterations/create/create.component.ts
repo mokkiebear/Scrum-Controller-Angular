@@ -6,24 +6,27 @@ import { MatSnackBar } from '@angular/material';
 
 import { ProjectService } from '../../../services/project.service';
 import { Project } from '../../../models/project.model';
+import { Iteration } from '../../../models/iteration.model';
 
 @Component({
-  selector: 'app-edit',
-  templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.css']
+  selector: 'iteration-create',
+  templateUrl: './create.component.html',
+  styleUrls: ['./create.component.css']
 })
-export class EditComponent implements OnInit {
+export class CreateIterationComponent implements OnInit {
 
   id: String;
-  project: Project;
-  updateForm: FormGroup;
+  iteration: Iteration;
+  project:Project;
+  createIterationForm: FormGroup;
+
   constructor(private projectService: ProjectService, private router: Router, private route: ActivatedRoute, private snackBar: MatSnackBar, private fb: FormBuilder) {
     this.createForm();
   }
 
   createForm(){
-    this.updateForm = this.fb.group({
-      title: ['', Validators.required],
+    this.createIterationForm = this.fb.group({
+      title: '',
       description: ''
     });
   }
@@ -33,15 +36,19 @@ export class EditComponent implements OnInit {
       this.id = params.id;
       this.projectService.getProjectById(this.id).subscribe(res => {
         this.project = <Project>res;
-        this.updateForm.get('title').setValue(this.project.title);
-        this.updateForm.get('description').setValue(this.project.description);
       });
     });
   }
 
-  updateProject(title, description, iterations){
-    this.projectService.updateProject(this.id, title, description, iterations).subscribe(() => {
-      this.snackBar.open('Проект успешно изменен!', 'OK', {
+  createIteration(title, description){
+    this.iteration = {
+      title: title,
+      description: description,
+      date: new Date()
+    }
+    this.project.iterations.push(this.iteration);
+    this.projectService.updateProject(this.id, this.project.title, this.project.description, this.project.iterations).subscribe(() => {
+      this.snackBar.open('Итерация успешно добавлена в проект!', 'OK', {
         duration: 3000
       });
     });

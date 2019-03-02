@@ -15,7 +15,7 @@
         <textarea matInput placeholder='Описание' formControlName='description' #description></textarea>
       </mat-form-field>
       <br><br>
-      <button mat-raised-button color='accent' routerLink='/api/projects'>Назад</button>
+      <button mat-raised-button color='accent' routerLink='/projects'>Назад</button>
       <button type='submit' (click)='createProject(title.value, description.value)' [disabled]='createForm.pristine || createForm.invalid' mat-raised-button color='primary'>Сохранить</button>
     </form>
   </mat-card>

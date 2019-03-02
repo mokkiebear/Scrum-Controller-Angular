@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatTableDataSource } from '@angular/material'
 
-import { Project } from '../../../project.model';
-import { ProjectService } from '../../../project.service';
+import { Project } from '../../../models/project.model';
+import { ProjectService } from '../../../services/project.service';
 
 @Component({
   selector: 'app-projects-list',
@@ -32,11 +32,15 @@ export class ProjectsListComponent implements OnInit {
   }
 
   editProject(id){
-    this.router.navigate([`/api/edit/${id}`]);
+    this.router.navigate([`/projects/edit/${id}`]);
   }
 
   getProject(id){
     this.projectService.getProjectById(id).subscribe(res => console.log(res));
+  }
+
+  openProject(id){
+    this.router.navigate([`/project/${id}`]);
   }
 
   deleteProject(id){
@@ -47,17 +51,17 @@ export class ProjectsListComponent implements OnInit {
 
   formatDate(date) {
     var monthNames = [
-      "January", "February", "March",
-      "April", "May", "June", "July",
-      "August", "September", "October",
-      "November", "December"
+      "января", "февраля", "марта",
+      "апреля", "мая", "июня", "июля",
+      "августа", "сентября", "октября",
+      "ноября", "декабря"
     ];
     date = new Date(date);
     var day = date.getDate();
     var monthIndex = date.getMonth();
     var year = date.getFullYear();
   
-    return day + ' ' + monthNames[monthIndex] + ' ' + year;
+    return day + ' ' + monthNames[monthIndex] + ', ' + year;
   }
 
 }

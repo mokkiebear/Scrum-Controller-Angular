@@ -12,8 +12,12 @@ table{
     padding: 5px;
 }
 
-.mat-column-title{
+.mat-column-titl{
     font-weight: bold;
+}
+
+.mat-column-titl:hover{
+    font-style: italic;
 }
 
 .mat-column-right{

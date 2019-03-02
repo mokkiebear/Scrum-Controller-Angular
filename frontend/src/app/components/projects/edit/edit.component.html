@@ -18,7 +18,7 @@
           <input type='datetime' matInput placeholder='Дата создания проекта' formControlName='date' #date>
         </mat-form-field>-->
         <br><br>
-        <button mat-raised-button color='accent' routerLink='/api/projects'>Назад</button>
+        <button mat-raised-button color='accent' routerLink='/projects'>Назад</button>
         <button type='submit' (click)='updateProject(title.value, description.value)' [disabled]='updateForm.pristine || updateForm.invalid' mat-raised-button color='primary'>Сохранить</button>
       </form>
     </mat-card>
