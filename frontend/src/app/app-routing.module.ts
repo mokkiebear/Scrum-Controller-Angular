@@ -11,7 +11,8 @@ const routes: Routes = [
   { path: 'projects/create', component: CreateComponent },
   { path: 'projects/edit/:id', component: EditComponent },
   { path: 'project/:id', component: ProjectViewComponent },
-  { path: 'iterations/create/:id', component: CreateIterationComponent, pathMatch: 'full' }
+  { path: 'iterations/create/:id', component: CreateIterationComponent, pathMatch: 'full' }/*,
+  { path: 'project/:prId/iteration/:itId' }*/
 ];
 
 @NgModule({

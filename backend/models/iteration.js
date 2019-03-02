@@ -2,6 +2,10 @@ const Joi = require('joi');
 const mongoose = require('mongoose');
 
 const Iteration = mongoose.model('Iteration', new mongoose.Schema({
+	_id:{
+		type: String,
+		required: true
+	},
 	title: {
 		type: String,
 		required: true,

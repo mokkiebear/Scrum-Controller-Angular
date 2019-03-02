@@ -29,10 +29,6 @@ export class ProjectService {
     return this.http.delete(`${this.uri}/api/projects/${id}`);
   }
 
-  deleteIteration(id){
-    
-  }
-
   updateProject(id, title, description, iterations){
     const project = {
       title: title,

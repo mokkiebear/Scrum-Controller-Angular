@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Project } from 'src/app/models/project.model';
 import { ProjectService } from 'src/app/services/project.service';
+import { IterationService } from 'src/app/services/iteration.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
@@ -11,7 +12,9 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag
   styleUrls: ['./project-view.component.css']
 })
 export class ProjectViewComponent implements OnInit {
-  id: String;
+  prId: String;
+  itId: String;
+  itTitle: String;
   project: Project;
 
   displayedColumns = ['title', 'description', 'date', 'actions'];
@@ -32,12 +35,12 @@ export class ProjectViewComponent implements OnInit {
   ];
   
 
-  constructor(private projectService: ProjectService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private projectService: ProjectService, private iterationService: IterationService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.id = params.id;
-      this.projectService.getProjectById(this.id).subscribe((res: Project) => {
+      this.prId = params.id;
+      this.projectService.getProjectById(this.prId).subscribe((res: Project) => {
         this.project = res;
         console.log(this.project);
       });
@@ -45,10 +48,18 @@ export class ProjectViewComponent implements OnInit {
   }
 
   deleteIteration(id){
-    /*this.projectService.deleteProject(id).subscribe(() => {
-      this.fetchProjects();
-    });*/
-    console.log(this.id, id);
+    console.log('Key: ', id);
+    this.iterationService.deleteIteration(this.prId, id).subscribe(() => {
+      this.fetchIterations();
+    });
+  }
+
+  fetchIterations(){
+    this.projectService
+      .getProjectById(this.prId)
+      .subscribe((data: Project) => {
+        this.project = data;
+      });
   }
 
   drop(event: CdkDragDrop<string[]>) {

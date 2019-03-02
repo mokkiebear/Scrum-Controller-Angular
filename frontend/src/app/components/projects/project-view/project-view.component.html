@@ -2,20 +2,20 @@
   <br>
   <mat-card class='mat-card'>
     <p cdkDrag>Проект: {{ project.title }}</p>
-    <button mat-raised-button color='primary' [routerLink]="['/iterations', 'create', id]">
+    <button mat-raised-button color='primary' [routerLink]="['/iterations', 'create', prId]">
       Создать итерацию
     </button>
 
     <p  *ngIf="project.iterations.length == 0">У данного проекта не создано итераций.</p>
     <table mat-table [dataSource]='project.iterations'  *ngIf="project.iterations.length > 0">
       <ng-container matColumnDef='title'>
-        <th mat-header-cell *matHeaderCellDef>Название проекта</th>
+        <th mat-header-cell *matHeaderCellDef>Название итерации</th>
         <td mat-cell *matCellDef='let element' class='mat-column mat-column-titl'><button mat-button color='primary'
             >{{ element.title | uppercase }}</button></td>
       </ng-container>
 
       <ng-container matColumnDef='description'>
-        <th mat-header-cell *matHeaderCellDef>Описание проекта</th>
+        <th mat-header-cell *matHeaderCellDef>Описание итерации</th>
         <td mat-cell *matCellDef='let element' class='mat-column mat-column-descr'>{{ element.description }}</td>
       </ng-container>
 

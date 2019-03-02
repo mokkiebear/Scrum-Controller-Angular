@@ -11,6 +11,7 @@ const cors = require('cors');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var projectsRouter = require('./routes/projects');
+var iterationsRouter = require('./routes/iterations');
 
 var app = express();
 
@@ -42,6 +43,7 @@ app.use(helmet());
 app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/projects', projectsRouter);
+app.use('/api/project', iterationsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -18,6 +18,8 @@ export class CreateIterationComponent implements OnInit {
   id: String;
   iteration: Iteration;
   project:Project;
+
+  itId: String;
   createIterationForm: FormGroup;
 
   constructor(private projectService: ProjectService, private router: Router, private route: ActivatedRoute, private snackBar: MatSnackBar, private fb: FormBuilder) {
@@ -41,10 +43,15 @@ export class CreateIterationComponent implements OnInit {
   }
 
   createIteration(title, description){
+    let date: Date = new Date();
+    this.itId = title.slice(0, 10) + date.getTime().toString();
+
+
     this.iteration = {
+      _id: this.itId,
       title: title,
       description: description,
-      date: new Date()
+      date: date
     }
     this.project.iterations.push(this.iteration);
     this.projectService.updateProject(this.id, this.project.title, this.project.description, this.project.iterations).subscribe(() => {
