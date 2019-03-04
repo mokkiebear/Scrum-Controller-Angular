@@ -1,12 +1,23 @@
 <div *ngIf="project">
   <br>
   <mat-card class='mat-card'>
-    <p cdkDrag>Проект: {{ project.title }}</p>
+    <p>Проект: {{ project.title }}</p>
     <button mat-raised-button color='primary' [routerLink]="['/iterations', 'create', prId]">
       Создать итерацию
     </button>
 
+    <mat-card *ngFor='let it of project.iterations; let i = index' class='mat-card-iter'>
+      <button mat-button color='primary' class='mat-card-iter-header' (click)="openIteration(it._id)">Итерация {{ i + 1 }}: {{ it.title }}</button>
+      <p class='mat-card-iter-descr'><b>Описание итерации:</b> {{ it.description }}</p>
+      <div class='mat-card-iter-actions'>
+        <button mat-button color='primary' (click)="editProject(element._id)">Изменить</button>
+        <button mat-raised-button color='warn' (click)="deleteIteration(it._id)">Удалить</button>
+      </div>
+      <p class='mat-card-iter-date'><b>Дата создания: </b>{{ it.date | date: "dd MMMM yyyy" }}</p>
+    </mat-card>
+
     <p  *ngIf="project.iterations.length == 0">У данного проекта не создано итераций.</p>
+    <!--
     <table mat-table [dataSource]='project.iterations'  *ngIf="project.iterations.length > 0">
       <ng-container matColumnDef='title'>
         <th mat-header-cell *matHeaderCellDef>Название итерации</th>
@@ -35,24 +46,6 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-
-    <!-- Это для карточек итераций -->
-    <div cdkDropListGroup>
-      <div class="example-container">
-        <h2>To do</h2>
-
-        <div cdkDropList [cdkDropListData]="todo" class="example-list" (cdkDropListDropped)="drop($event)">
-          <span class="example-box" *ngFor="let item of todo" cdkDrag>{{item}}</span>
-        </div>
-      </div>
-
-      <div class="example-container">
-        <h2>Done</h2>
-
-        <div class='example-list' cdkDropList [cdkDropListData]="done" (cdkDropListDropped)="drop($event)">
-          <span class='example-box' *ngFor="let item of done" cdkDrag>{{item}}</span>
-        </div>
-      </div>
-    </div>
+    -->
   </mat-card>
 </div>

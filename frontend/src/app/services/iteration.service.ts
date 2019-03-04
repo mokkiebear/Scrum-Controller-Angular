@@ -20,4 +20,8 @@ export class IterationService {
   deleteIteration(prId, itId){
     return this.http.delete(`${this.uri}/api/project/${prId}/iteration/${itId}`);
   }
+
+  getIterationById(prId, itId){
+    return this.http.get(`${this.uri}/api/project/${prId}/iteration/${itId}`);
+  }
 }

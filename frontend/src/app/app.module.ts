@@ -1,3 +1,4 @@
+import { CreateCardComponent } from './components/iter-kanban/create/create.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
@@ -28,6 +29,7 @@ import { ProjectsListComponent } from './components/projects/projects-list/proje
 import { ProjectViewComponent } from './components/projects/project-view/project-view.component';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { IterKanbanComponent } from './components/iter-kanban/iter-kanban.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     EditComponent,
     ProjectsListComponent,
     ProjectViewComponent,
-    CreateIterationComponent
+    CreateIterationComponent,
+    IterKanbanComponent,
+    CreateCardComponent
   ],
   imports: [
     BrowserModule,

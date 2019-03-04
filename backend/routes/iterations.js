@@ -22,6 +22,17 @@ router.delete('/:prId/iteration/:itId', async function(req, res){
     catch{
         return res.status(404).send('The iteration with the given ID was not found');
     }
+});
+
+router.get('/:prId/iteration/:itId', async function(req, res){
+    try{
+        const project = await Project.findOne({ _id: req.params.prId });
+        const iteration = project.iterations.find(x => x._id == req.params.itId);
+        res.json(iteration);
+    }
+    catch{
+        return res.status(404).send('The iteration with the given ID was not found');
+    }
     
 });
 

@@ -15,6 +15,7 @@ const Iteration = mongoose.model('Iteration', new mongoose.Schema({
 		type: String,
 		required: false
 	},
+	cards: [{ type: Object, required: false }],
 	date: { type: Date, default: Date.now }
 }));
 

@@ -32,6 +32,7 @@ router.get('/:id', async function (req, res) {
 	}
 });
 
+//Изменение проекта или создание итераций или создание карточек
 router.put('/:id', async function (req, res) {
 	//Validate - If invalid, return 400 - Bad Request
 	const { error } = validate(req.body);

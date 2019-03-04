@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material';
 import { ProjectService } from '../../../services/project.service';
 import { Project } from '../../../models/project.model';
 import { Iteration } from '../../../models/iteration.model';
+import { Card } from 'src/app/models/card.model';
 
 @Component({
   selector: 'iteration-create',
@@ -16,10 +17,11 @@ import { Iteration } from '../../../models/iteration.model';
 export class CreateIterationComponent implements OnInit {
 
   id: String;
-  iteration: Iteration;
   project:Project;
 
-  itId: String;
+  card: Card;
+
+  itId: String = '';
   createIterationForm: FormGroup;
 
   constructor(private projectService: ProjectService, private router: Router, private route: ActivatedRoute, private snackBar: MatSnackBar, private fb: FormBuilder) {
@@ -43,17 +45,26 @@ export class CreateIterationComponent implements OnInit {
   }
 
   createIteration(title, description){
+    //Iteration ID genereation
     let date: Date = new Date();
-    this.itId = title.slice(0, 10) + date.getTime().toString();
 
+    for (let i = 0; i < 5; ++i){
+      if (!title[i]) continue;
+      this.itId += title.charCodeAt(i).toString();
+    };
 
-    this.iteration = {
+    this.itId += date.getTime().toString();
+
+    let iteration = {
       _id: this.itId,
       title: title,
       description: description,
+      //Костыль. Переделать: формировать объект в сервисе
+      cards: [],
       date: date
     }
-    this.project.iterations.push(this.iteration);
+    this.project.iterations.push(<Iteration>iteration);
+
     this.projectService.updateProject(this.id, this.project.title, this.project.description, this.project.iterations).subscribe(() => {
       this.snackBar.open('Итерация успешно добавлена в проект!', 'OK', {
         duration: 3000

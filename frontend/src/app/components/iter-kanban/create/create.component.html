@@ -1,0 +1,28 @@
+<div>
+  <br>
+  <mat-card>
+    <section class='mat-typography'>
+      <h3>Создание карточки</h3>
+    </section>
+    <mat-divider></mat-divider>
+    <br>
+    <form [formGroup]='createCardForm' class='create-form'>
+      <mat-form-field class='field-full-width'>
+        <input matInput placeholder='Наименование карты' formControlName='title' #title>
+      </mat-form-field>
+      <br>
+      <mat-form-field class='field-full-width'>
+        <textarea matInput placeholder='Описание' formControlName='description' #description></textarea>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select  formControlName='state' #state>
+          <mat-option *ngFor='let st of states' [value]='st'>{{st}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br>
+      <br><br>
+      <button mat-raised-button color='accent' [routerLink]="['/project', prId, 'iteration', itId]">Назад</button>
+      <button type='submit' (click)='createCard(title.value, description.value, state.value)' [disabled]='createCardForm.pristine || createCardForm.invalid' mat-raised-button color='primary'>Сохранить</button>
+    </form>
+  </mat-card>
+</div>
