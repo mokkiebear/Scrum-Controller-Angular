@@ -1,5 +1,5 @@
 export interface Card {
-    _id: String;
+    _parent: String;
     title: String;
     description: String;
     state: String;

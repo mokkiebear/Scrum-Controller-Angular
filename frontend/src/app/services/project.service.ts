@@ -6,15 +6,15 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ProjectService {
 
-  uri = 'http://localhost:3000';
+  url = 'http://localhost:3000';
   constructor(private http: HttpClient) { }
 
   getProjects(){
-    return this.http.get(`${this.uri}/api/projects`);
+    return this.http.get(`${this.url}/projects`);
   }
 
   getProjectById(id){
-    return this.http.get(`${this.uri}/api/projects/${id}`);
+    return this.http.get(`${this.url}/projects/${id}`);
   }
 
   createProject(title, description){
@@ -22,34 +22,18 @@ export class ProjectService {
       title: title,
       description: description
     };
-    return this.http.post(`${this.uri}/api/projects`, project);
+    return this.http.post(`${this.url}/projects`, project);
   }
 
   deleteProject(id){
-    return this.http.delete(`${this.uri}/api/projects/${id}`);
+    return this.http.delete(`${this.url}/projects/${id}`);
   }
 
-  updateProject(id, title, description, iterations){
+  updateProject(id, title, description){
     const project = {
       title: title,
-      description: description,
-      iterations: iterations
-    }
-    return this.http.put(`${this.uri}/api/projects/${id}`, project);
-  }
-
-  /*createIteration(id, title, description){
-    let project;
-    const iteration = {
-      title: title,
       description: description
-    };
-    this.getProjectById(id).subscribe(res => {
-      project = res;
-    });
-    let iterations = project.iterations;
-    iterations.push(iteration);
-    
-    this.updateProject(id, project.title, project.description, iterations);
-  }*/
+    }
+    return this.http.put(`${this.url}/projects/${id}`, project);
+  }
 }

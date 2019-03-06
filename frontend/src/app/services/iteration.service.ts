@@ -6,22 +6,36 @@ import { HttpClient } from '@angular/common/http';
 })
 export class IterationService {
 
-  uri = 'http://localhost:3000';
+  url = 'http://localhost:3000';
   constructor(private http: HttpClient) { }
 
-  /*createIteration(title, description){
+  getIterations(prId){
+    return this.http.get(`${this.url}/projects/${prId}/iterations`);
+  }
+  
+  getIterationById(id){
+    return this.http.get(`${this.url}/iterations/${id}`);
+  }
+
+  createIteration(prId, title, description){
+    const iteration = {
+    _parent: prId,
+    title: title,
+    description: description,
+    cards: []
+    };
+    return this.http.post(`${this.url}/iterations`, iteration);
+  }
+
+  updateIteration(id, title, description){
     const iteration = {
       title: title,
       description: description
     };
-    return this.http.post(`${this.uri}/api/project`, iteration);
-  }*/
-
-  deleteIteration(prId, itId){
-    return this.http.delete(`${this.uri}/api/project/${prId}/iteration/${itId}`);
+    return this.http.put(`${this.url}/iterations/${id}`, iteration);
   }
 
-  getIterationById(prId, itId){
-    return this.http.get(`${this.uri}/api/project/${prId}/iteration/${itId}`);
+  deleteIteration(itId){
+    return this.http.delete(`${this.url}/iterations/${itId}`);
   }
 }

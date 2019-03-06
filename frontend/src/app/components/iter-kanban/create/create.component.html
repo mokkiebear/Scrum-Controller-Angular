@@ -21,7 +21,7 @@
       </mat-form-field>
       <br>
       <br><br>
-      <button mat-raised-button color='accent' [routerLink]="['/project', prId, 'iteration', itId]">Назад</button>
+      <button mat-raised-button color='accent' [routerLink]="['/iterations', itId]">Назад</button>
       <button type='submit' (click)='createCard(title.value, description.value, state.value)' [disabled]='createCardForm.pristine || createCardForm.invalid' mat-raised-button color='primary'>Сохранить</button>
     </form>
   </mat-card>

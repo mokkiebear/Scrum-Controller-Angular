@@ -8,7 +8,7 @@ const Project = mongoose.model('Project', new mongoose.Schema({
 		maxlength: 50
 	},
 	description: {type: String, required: false},
-	iterations: [{ type: Object, required: false }],
+	iterations: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Iteration' }],
 	date: { type: Date, default: Date.now }
 }));
 

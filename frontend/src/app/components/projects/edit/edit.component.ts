@@ -39,10 +39,10 @@ export class EditComponent implements OnInit {
     });
   }
 
-  updateProject(title, description, iterations){
-    this.projectService.updateProject(this.id, title, description, iterations).subscribe(() => {
+  updateProject(title, description){
+    this.projectService.updateProject(this.id, title, description).subscribe(() => {
       this.snackBar.open('Проект успешно изменен!', 'OK', {
-        duration: 3000
+        duration: 2000
       });
     });
   }

@@ -6,17 +6,20 @@
     </section>
     <mat-divider></mat-divider>
     <br>
-    <form [formGroup]='createForm' class='create-form'>
-      <mat-form-field class='field-full-width'>
-        <input matInput placeholder='Наименование проекта' formControlName='title' #title>
+    <form [formGroup]='createProjectForm' class='create-form'>
+      <mat-form-field appearance="standard" class='field-full-width'>
+        <mat-label>Название проекта</mat-label>
+        <input matInput placeholder="Название проекта" formControlName='title' #title required minlength="3">
+        <mat-error *ngIf="title.required">Введите название проекта.</mat-error>
+        <mat-error *ngIf="!title.minlength">Название проекта должно состоять минимум из 3 букв.</mat-error>
       </mat-form-field>
-      <br>
+      <br><br/>
       <mat-form-field class='field-full-width'>
-        <textarea matInput placeholder='Описание' formControlName='description' #description></textarea>
+        <textarea matInput cdkTextareaAutosize placeholder='Описание' formControlName='description' #description></textarea>
       </mat-form-field>
       <br><br>
       <button mat-raised-button color='accent' routerLink='/projects'>Назад</button>
-      <button type='submit' (click)='createProject(title.value, description.value)' [disabled]='createForm.pristine || createForm.invalid' mat-raised-button color='primary'>Сохранить</button>
+      <button type='submit' (click)='createProject(title, description)' [disabled]='createProjectForm.pristine || createProjectForm.invalid' mat-raised-button color='primary'>Сохранить</button>
     </form>
   </mat-card>
 </div>

@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { MatSnackBar } from '@angular/material';
 
+import { IterationService } from '../../../services/iteration.service';
 import { ProjectService } from '../../../services/project.service';
 import { Project } from '../../../models/project.model';
 import { Iteration } from '../../../models/iteration.model';
@@ -19,12 +20,9 @@ export class CreateIterationComponent implements OnInit {
   id: String;
   project:Project;
 
-  card: Card;
-
-  itId: String = '';
   createIterationForm: FormGroup;
 
-  constructor(private projectService: ProjectService, private router: Router, private route: ActivatedRoute, private snackBar: MatSnackBar, private fb: FormBuilder) {
+  constructor(private iterationService: IterationService, private projectService: ProjectService, private router: Router, private route: ActivatedRoute, private snackBar: MatSnackBar, private fb: FormBuilder) {
     this.createForm();
   }
 
@@ -45,31 +43,18 @@ export class CreateIterationComponent implements OnInit {
   }
 
   createIteration(title, description){
-    //Iteration ID genereation
-    let date: Date = new Date();
+    this.iterationService.createIteration(this.id, title, description).subscribe(res => {
+      console.log(res);
+      //this.router.navigate(['/projects']);
+    });
 
-    for (let i = 0; i < 5; ++i){
-      if (!title[i]) continue;
-      this.itId += title.charCodeAt(i).toString();
-    };
-
-    this.itId += date.getTime().toString();
-
-    let iteration = {
-      _id: this.itId,
-      title: title,
-      description: description,
-      //Костыль. Переделать: формировать объект в сервисе
-      cards: [],
-      date: date
-    }
-    this.project.iterations.push(<Iteration>iteration);
+    /*this.project.iterations.push(<Iteration>iteration);
 
     this.projectService.updateProject(this.id, this.project.title, this.project.description, this.project.iterations).subscribe(() => {
       this.snackBar.open('Итерация успешно добавлена в проект!', 'OK', {
         duration: 3000
       });
-    });
+    });*/
   }
 
 }

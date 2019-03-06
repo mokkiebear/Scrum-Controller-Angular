@@ -2,6 +2,7 @@
   width: 80%;
   margin: 10px auto;
   text-align: center;
+  min-height: 500px;
 }
 
 .example-container {
@@ -13,6 +14,7 @@
 }
 
 .example-list {
+  box-shadow: #ccc 1px 2px 2px;
   border: solid 1px #ccc;
   min-height: 60px;
   background: white;
@@ -22,19 +24,29 @@
 }
 
 .example-box {
+  box-shadow: #ccc 1px 2px 2px;
+
   margin: 5px auto;
   width: 90%;
   padding: 15px 5px;
   border-radius: 2px;
-  color: rgba(46, 0, 133, 0.87);
+  border: 1px solid #ccc;
+  color: black;
+  background: white;
+
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+
   box-sizing: border-box;
   cursor: move;
   font-weight: bold;
   font-size: 12px;
+}
+
+.example-box:last-child{
+  margin-bottom: 40px;
 }
 
 .cdk-drag-preview {
@@ -45,14 +57,27 @@
     0 3px 14px 2px rgba(0, 0, 0, 0.12);
 }
 
-.cdk-drag-placeholder {
-  opacity: 0;
-}
-
 .cdk-drag-animating {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
 .example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.example-custom-placeholder {
+  background: #ccc;
+  border: dotted 3px #999;
+  min-height: 60px;
+  margin: 5px auto;
+  width: 90%;
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.mat-icon-delete{
+  color: red;
+}
+
+.mat-icon-edit{
+  color: blue;
 }

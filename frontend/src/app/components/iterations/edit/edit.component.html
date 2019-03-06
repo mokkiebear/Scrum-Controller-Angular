@@ -1,14 +1,14 @@
-<div>
+<div *ngIf='iteration'>
   <br>
   <mat-card>
     <section class='mat-typography'>
-      <h3>Изменение проекта</h3>
+      <h3>Изменение итерации</h3>
     </section>
     <mat-divider></mat-divider>
     <br>
     <form [formGroup]='updateForm' class='edit-form'>
       <mat-form-field class='field-full-width'>
-        <input matInput placeholder='Наименование проекта' formControlName='title' #title>
+        <input matInput placeholder='Название итерации' formControlName='title' #title>
       </mat-form-field>
       <br>
       <mat-form-field class='field-full-width'>
@@ -18,8 +18,8 @@
           <input type='datetime' matInput placeholder='Дата создания проекта' formControlName='date' #date>
         </mat-form-field>-->
       <br><br>
-      <button mat-raised-button color='accent' routerLink='/projects'>Назад</button>
-      <button type='submit' (click)='updateProject(title.value, description.value)' [disabled]='updateForm.pristine || updateForm.invalid'
+      <button mat-raised-button color='accent' [routerLink]="['/project', iteration._parent]">Назад</button>
+      <button type='submit' (click)='updateIteration(title.value, description.value)' [disabled]='updateForm.pristine || updateForm.invalid'
         mat-raised-button color='primary'>Сохранить</button>
     </form>
   </mat-card>

@@ -12,6 +12,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var projectsRouter = require('./routes/projects');
 var iterationsRouter = require('./routes/iterations');
+var cardsRouter = require('./routes/cards');
 
 var app = express();
 
@@ -41,9 +42,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(helmet());
 
 app.use('/', indexRouter);
-app.use('/api/users', usersRouter);
-app.use('/api/projects', projectsRouter);
-app.use('/api/project', iterationsRouter);
+app.use('/users', usersRouter);
+app.use('/projects', projectsRouter);
+app.use('/iterations', iterationsRouter);
+app.use('/cards', cardsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

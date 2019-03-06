@@ -1,9 +1,8 @@
-import { ProjectService } from './../../services/project.service';
-import { Component, OnInit, AfterViewChecked } from '@angular/core';
-import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import { Component, OnInit } from '@angular/core';
+import {CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { IterationService } from 'src/app/services/iteration.service';
+import { CardService } from 'src/app/services/card.service';
 import { Card } from 'src/app/models/card.model';
-import { Project } from 'src/app/models/project.model';
 import { Iteration } from 'src/app/models/iteration.model';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -14,55 +13,26 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class IterKanbanComponent implements OnInit {
 
-  prId: String;
   itId: String;
-  cardId: String;
-
-  project: Project;
   iteration: Iteration;
 
+  cardId: String;
   cards: Card[];
 
   todo = [];
   doing = [];
   done = [];
 
-  constructor(private projectService: ProjectService, private iterationService: IterationService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private cardService: CardService, private iterationService: IterationService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.itId = params.itId;
-      this.prId = params.prId;
-      this.projectService.getProjectById(this.prId).subscribe((res: Project) => {
-        this.project = res;
-        this.iterationService.getIterationById(this.prId, this.itId).subscribe((res: Iteration) => {
-          this.iteration = res;
-          this.cards = this.iteration.cards;
-
-          for( let i = 0; i < this.cards.length; ++i){ 
-            let id = this.cards[i]._id;
-            let title = this.cards[i].title;
-            switch (this.cards[i].state){   
-              case 'todo': this.todo.push({ id: id, title: title}); break;
-              case 'doing': this.doing.push({ id: id, title: title}); break;
-              case 'done': this.done.push({ id: id, title: title}); break;
-            }
-          }
-
-          console.log("Cards ", this.cards);
-          console.log('Iteration ', this.iteration);
-        });
-      });
+      this.itId = params.id;
     });
   }
 
-  flag = true;
-  ngAfterViewChecked(){
-      this.changeColors();
-    }
-  }
   fetchCards(){
-    this.projectService
+    /*this.projectService
       .getProjectById(this.prId)
       .subscribe((data: Project) => {
         this.project = data;
@@ -72,7 +42,7 @@ export class IterKanbanComponent implements OnInit {
           this.cards = this.iteration.cards;
 
         }); 
-      });
+      });*/
   }
   //For cards
   drop(event: CdkDragDrop<string[]>) {
@@ -85,7 +55,7 @@ export class IterKanbanComponent implements OnInit {
                         event.currentIndex);
     }
   }
-
+/*
   save(event, item){
     let state;
     if (event.container.id.indexOf('0') != -1){
@@ -106,13 +76,9 @@ export class IterKanbanComponent implements OnInit {
     this.projectService.updateProject(this.prId, this.project.title, this.project.description, this.project.iterations).subscribe();
   }
 
-  changeColors(){
-    if (!flag) return;
-    var cards = document.getElementsByClassName('example-box') as HTMLCollectionOf<HTMLElement>;
-    for (let i = 0; i < cards.length; ++i){
-      cards[i].style.backgroundColor = "hsl(" + Math.random() * 360 + ", 100%, 75%)";
-    }
-    flag = false;
-  }
-
+  deleteCard(cardId){
+    this.cardService.deleteCard(this.prId, this.itId, cardId).subscribe(() => {
+      this.fetchCards();
+    });
+  }*/
 }

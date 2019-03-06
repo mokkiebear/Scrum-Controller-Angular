@@ -1,51 +1,29 @@
 <div *ngIf="project">
-  <br>
-  <mat-card class='mat-card'>
-    <p>Проект: {{ project.title }}</p>
-    <button mat-raised-button color='primary' [routerLink]="['/iterations', 'create', prId]">
-      Создать итерацию
-    </button>
+  <p>Проект: {{ project.title }}</p>
 
-    <mat-card *ngFor='let it of project.iterations; let i = index' class='mat-card-iter'>
-      <button mat-button color='primary' class='mat-card-iter-header' (click)="openIteration(it._id)">Итерация {{ i + 1 }}: {{ it.title }}</button>
+  <button mat-raised-button color='primary' [routerLink]="['/iterations', 'create', prId]">
+    Создать итерацию
+  </button>
+  <button mat-raised-button color='warn' routerLink='/projects'>Назад</button>
+  <br />
+  <div *ngIf="iterations.length > 0; then iterationsList else noIterations"></div>
+</div>
+
+<ng-template #iterationsList>
+  <mat-card class='mat-card'>
+    <mat-card *ngFor='let it of iterations; let i = index' class='mat-card-iter'>
+      <button mat-button color='primary' class='mat-card-iter-header' (click)="openIteration(it._id)">Итерация {{ i +
+        1 }}: {{ it.title }}</button>
       <p class='mat-card-iter-descr'><b>Описание итерации:</b> {{ it.description }}</p>
       <div class='mat-card-iter-actions'>
-        <button mat-button color='primary' (click)="editProject(element._id)">Изменить</button>
+        <button mat-button color='primary' (click)="editIteration(it._id)">Изменить</button>
         <button mat-raised-button color='warn' (click)="deleteIteration(it._id)">Удалить</button>
       </div>
       <p class='mat-card-iter-date'><b>Дата создания: </b>{{ it.date | date: "dd MMMM yyyy" }}</p>
     </mat-card>
-
-    <p  *ngIf="project.iterations.length == 0">У данного проекта не создано итераций.</p>
-    <!--
-    <table mat-table [dataSource]='project.iterations'  *ngIf="project.iterations.length > 0">
-      <ng-container matColumnDef='title'>
-        <th mat-header-cell *matHeaderCellDef>Название итерации</th>
-        <td mat-cell *matCellDef='let element' class='mat-column mat-column-titl'><button mat-button color='primary'
-            >{{ element.title | uppercase }}</button></td>
-      </ng-container>
-
-      <ng-container matColumnDef='description'>
-        <th mat-header-cell *matHeaderCellDef>Описание итерации</th>
-        <td mat-cell *matCellDef='let element' class='mat-column mat-column-descr'>{{ element.description }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef='date'>
-        <th mat-header-cell *matHeaderCellDef>Дата создания</th>
-        <td mat-cell *matCellDef='let element' class='mat-column mat-column-dat'>{{ element.date | date: "dd MMMM yyyy"
-          }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef='actions'>
-        <th mat-header-cell *matHeaderCellDef class='mat-column-right'>Действия</th>
-        <td mat-cell *matCellDef='let element' class='mat-column mat-column-right'>
-          <button mat-button color='primary' (click)="editProject(element._id)">Изменить</button>
-          <button mat-raised-button color='warn' (click)="deleteIteration(element._id)">Удалить</button>
-        </td>
-      </ng-container>
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-    -->
   </mat-card>
-</div>
+</ng-template>
+
+<ng-template #noIterations>
+  У данного проекта не создано итераций.
+</ng-template>

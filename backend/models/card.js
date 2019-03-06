@@ -2,6 +2,7 @@ const Joi = require('joi');
 const mongoose = require('mongoose'); 
 
 const Card = mongoose.model('Card', new mongoose.Schema({
+	_parent: { type: String },
 	title: {
 		type: String,
 		required: true,
@@ -11,11 +12,11 @@ const Card = mongoose.model('Card', new mongoose.Schema({
 	state: {type: String, default: 'todo'},
 	date: { type: Date, default: Date.now }
 }));
-/*
-function validateProject(project) {
-	const schema = { title: Joi.string().min(3).required(), description: Joi.string().allow(''), iterations: Joi.array().allow([]) };
-	return Joi.validate(project, schema);
+
+function validateCard(card) {
+	const schema = { _parent: Joi.string(), title: Joi.string().min(3).required(), description: Joi.string().allow(''), state: Joi.string() };
+	return Joi.validate(card, schema);
 }
-*/
-module.exports.Project = Project;
-//module. exports.validate = validateProject;
+
+module.exports.Card = Card;
+module. exports.validate = validateCard;
