@@ -36,8 +36,7 @@ export class CardService {
     return this.http.put(`${this.url}/cards/${id}`, card);
   }
 
-  deleteCard(prId, itId, cardId){
-    console.log(prId, itId, cardId);
-    return this.http.delete(`${this.url}/api/cards/${prId}/iteration/${itId}/card/${cardId}`);
+  deleteCard(cardId){
+    return this.http.delete(`${this.url}/cards/${cardId}`);
   }
 }

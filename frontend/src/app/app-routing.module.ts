@@ -22,7 +22,7 @@ const routes: Routes = [
   { path: 'projects/edit/:id', component: EditComponent },
   //View the selected project (id of project)
   { path: 'project/:id', component: ProjectViewComponent },
-
+  
   { path: 'iterations/:id', component: IterationViewComponent },
   { path: 'iterations/create/:id', component: CreateIterationComponent, pathMatch: 'full' },
   { path: 'iterations/edit/:id', component: EditIterationComponent },

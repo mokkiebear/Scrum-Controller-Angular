@@ -13,10 +13,11 @@
           class="example-list" (cdkDropListDropped)="drop($event)">
           <div class="example-box" *ngFor="let item of todo" cdkDrag (cdkDragDropped)="save($event, item)">
             <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-            {{item.title}}
-            <mat-menu #appMenu="matMenu">
+            <h3 class='card-header'>{{item.title}}</h3>
+            <p class='card-description'>{{item.description}}</p>
+            <mat-menu #appMenu="matMenu" class='card-menu'>
               <button mat-menu-item><mat-icon class='mat-icon-edit'>edit</mat-icon>Изменить</button>
-              <button mat-menu-item (click)='deleteCard(item.id)'><mat-icon class='mat-icon-delete'>delete</mat-icon>Удалить</button>
+              <button mat-menu-item (click)='deleteCard(item._id)'><mat-icon class='mat-icon-delete'>delete</mat-icon>Удалить</button>
             </mat-menu>
             
             <button mat-icon-button [matMenuTriggerFor]="appMenu">
@@ -32,10 +33,11 @@
           (cdkDropListDropped)="drop($event)">
           <div class='example-box' *ngFor="let item of doing" cdkDrag (cdkDragDropped)="save($event, item)">
             <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-            {{item.title}}
-            <mat-menu #appMenu="matMenu">
+            <h3 class='card-header'>{{item.title}}</h3>
+            <p class='card-description'>{{item.description}}</p>
+            <mat-menu #appMenu="matMenu" class='card-menu'>
               <button mat-menu-item><mat-icon class='mat-icon-edit'>edit</mat-icon>Изменить</button>
-              <button mat-menu-item (click)='deleteCard(item.id)'><mat-icon class='mat-icon-delete'>delete</mat-icon>Удалить</button>
+              <button mat-menu-item (click)='deleteCard(item._id)'><mat-icon class='mat-icon-delete'>delete</mat-icon>Удалить</button>
             </mat-menu>
             
             <button mat-icon-button [matMenuTriggerFor]="appMenu">
@@ -51,10 +53,11 @@
           (cdkDropListDropped)="drop($event)">
           <div class='example-box' *ngFor="let item of done" cdkDrag (cdkDragDropped)="save($event, item)">
             <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-            {{item.title}}
-            <mat-menu #appMenu="matMenu">
+            <h3 class='card-header'>{{item.title}}</h3>
+            <p class='card-description'>{{item.description}}</p>
+            <mat-menu #appMenu="matMenu" class='card-menu'>
               <button mat-menu-item><mat-icon class='mat-icon-edit'>edit</mat-icon>Изменить</button>
-              <button mat-menu-item (click)='deleteCard(item.id)'><mat-icon class='mat-icon-delete'>delete</mat-icon>Удалить</button>
+              <button mat-menu-item (click)='deleteCard(item._id)'><mat-icon class='mat-icon-delete'>delete</mat-icon>Удалить</button>
             </mat-menu>
             
             <button mat-icon-button [matMenuTriggerFor]="appMenu">

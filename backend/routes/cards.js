@@ -53,4 +53,10 @@ router.put('/:id', async function(req, res) {
   }
 });
 
+router.delete('/:id', async function(req, res) {
+  let card = await Card.findOneAndDelete({ _id: req.params.id });
+  let iteration = await Iteration.findOneAndUpdate({ _id: card._parent }, { $pull: { cards: card._id } });
+  res.json(card);
+});
+
 module.exports = router;

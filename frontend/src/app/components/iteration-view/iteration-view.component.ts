@@ -5,6 +5,7 @@ import { CardService } from 'src/app/services/card.service';
 import { Card } from 'src/app/models/card.model';
 import { Iteration } from 'src/app/models/iteration.model';
 import { Router, ActivatedRoute } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'iteration-view',
@@ -22,7 +23,7 @@ export class IterationViewComponent implements OnInit {
   doing = [];
   done = [];
 
-  constructor(private cardService: CardService, private iterationService: IterationService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private cardService: CardService, private iterationService: IterationService, private router: Router, private route: ActivatedRoute, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -32,6 +33,9 @@ export class IterationViewComponent implements OnInit {
   }
 
   fetchCards(){
+    this.todo = [];
+    this.doing = [];
+    this.done = [];
     this.cardService.getCards(this.itId).subscribe(res => {
       this.cards = res as Card[];
       for (let card of this.cards){
@@ -43,7 +47,7 @@ export class IterationViewComponent implements OnInit {
       }
     });
   }
-  //For cards
+  
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
@@ -53,10 +57,11 @@ export class IterationViewComponent implements OnInit {
                         event.previousIndex,
                         event.currentIndex);
     }
+    this.snackBar.open('Изменения сохраняются...', 'OK', { duration: 1000 });
   }
 
+  //This method save the state of card
   save(event, item){
-    console.log(event, item);
     let state;
     
     if (event.container.id.indexOf('0') != -1){
@@ -69,12 +74,16 @@ export class IterationViewComponent implements OnInit {
       state = 'done';
     }
     
-    this.cardService.updateCard(item._id, item.title, item.description, state);
+    this.cardService.updateCard(item._id, item.title, item.description, state).subscribe(res => {
+      console.log(res);
+      this.snackBar.open('Изменения сохранены!', 'OK', { duration: 1000 });
+    });
   }
-/*
+
   deleteCard(cardId){
-    this.cardService.deleteCard(this.prId, this.itId, cardId).subscribe(() => {
+    this.cardService.deleteCard(cardId).subscribe(res => {
+      console.log(res);
       this.fetchCards();
     });
-  }*/
+  }
 }
