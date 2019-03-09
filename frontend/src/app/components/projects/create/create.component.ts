@@ -21,7 +21,8 @@ export class CreateComponent implements OnInit {
   }
 
   createProject(title: HTMLInputElement, description: HTMLInputElement){
-    this.projectService.createProject(title.value, description.value).subscribe((res) =>{
+    let descriptionValue: string = description.value == ''?'Описание не задано':description.value;
+    this.projectService.createProject(title.value, descriptionValue).subscribe((res) =>{
       console.log(res);
       this.router.navigate(['/projects']);
     });

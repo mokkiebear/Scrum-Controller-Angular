@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { IterKanbanComponent } from './iter-kanban.component';
+import { IterationViewComponent } from './iteration-view.component';
 
-describe('IterKanbanComponent', () => {
-  let component: IterKanbanComponent;
-  let fixture: ComponentFixture<IterKanbanComponent>;
+describe('IterationViewComponent', () => {
+  let component: IterationViewComponent;
+  let fixture: ComponentFixture<IterationViewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ IterKanbanComponent ]
+      declarations: [ IterationViewComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(IterKanbanComponent);
+    fixture = TestBed.createComponent(IterationViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

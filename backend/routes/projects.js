@@ -62,7 +62,7 @@ router.delete('/:id', async function (req, res) {
 	}
 });
 
-//Получение итераций в рамках объекта
+//Получение итераций в рамках проекта
 router.get('/:prId/iterations/', async function(req, res){
 	try{
 		const project = await Project.findOne({ _id: req.params.prId });

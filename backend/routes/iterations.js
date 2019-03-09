@@ -2,6 +2,7 @@ const router = require('express').Router();
 const mongoose = require('mongoose');
 const { Iteration, validate } = require('../models/iteration');
 const { Project } = require('../models/project');
+const { Card } = require('../models/card');
 
 router.get('/:id', async function (req, res) {
   try {
@@ -47,6 +48,17 @@ router.put('/:id', async function(req, res) {
   }
   catch(err){
     res.status(404).send(err.message);
+  }
+});
+
+router.get('/:itId/cards', async function(req, res){
+  try{
+    const iteration = await Iteration.findOne({ _id: req.params.itId });
+    const cards = await Card.find({ _id: { $in: iteration.cards } });
+    res.json(cards);
+  }
+  catch(err){
+    return res.status(404).send(err.message);
   }
 });
 module.exports = router;

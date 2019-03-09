@@ -7,8 +7,6 @@ import { MatSnackBar } from '@angular/material';
 import { IterationService } from '../../../services/iteration.service';
 import { ProjectService } from '../../../services/project.service';
 import { Project } from '../../../models/project.model';
-import { Iteration } from '../../../models/iteration.model';
-import { Card } from 'src/app/models/card.model';
 
 @Component({
   selector: 'iteration-create',
@@ -28,7 +26,7 @@ export class CreateIterationComponent implements OnInit {
 
   createForm(){
     this.createIterationForm = this.fb.group({
-      title: '',
+      title: [ '', Validators.required],
       description: ''
     });
   }
@@ -36,6 +34,7 @@ export class CreateIterationComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.id = params.id;
+      //Проект нужен для вывода дополнительных сведений о проекте
       this.projectService.getProjectById(this.id).subscribe(res => {
         this.project = <Project>res;
       });
@@ -43,18 +42,12 @@ export class CreateIterationComponent implements OnInit {
   }
 
   createIteration(title, description){
+    description = description == ''?'Описание не задано.':description;
     this.iterationService.createIteration(this.id, title, description).subscribe(res => {
-      console.log(res);
-      //this.router.navigate(['/projects']);
-    });
-
-    /*this.project.iterations.push(<Iteration>iteration);
-
-    this.projectService.updateProject(this.id, this.project.title, this.project.description, this.project.iterations).subscribe(() => {
       this.snackBar.open('Итерация успешно добавлена в проект!', 'OK', {
-        duration: 3000
+        duration: 2000
       });
-    });*/
+      this.router.navigate([`/project/${this.id}`]);
+    });
   }
-
 }

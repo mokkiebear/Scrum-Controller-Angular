@@ -9,6 +9,17 @@ const { Card, validate } = require('../models/card');
 });
 */
 
+router.get('/:id', async function(req, res){
+  try{
+    const card = await Card.findOne({ _id: req.params.id });
+    res.json(card);
+  }
+  catch(err){
+    return res.status(404).send('The card with the given id was not found!');
+  }
+  
+});
+
 router.post('/', async function(req, res){
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
@@ -30,17 +41,16 @@ router.post('/', async function(req, res){
   }
 });
 
-//Получение итерации по ID
-/*router.get('/:prId/iteration/:itId', async function(req, res){
-    try{
-        const project = await Project.findOne({ _id: req.params.prId });
-        const iteration = project.iterations.find(x => x._id == req.params.itId);
-        res.json(iteration);
-    }
-    catch{
-        return res.status(404).send('The iteration with the given ID was not found');
-    }
-    
-});*/
+
+router.put('/:id', async function(req, res) {
+  const { error } = validate(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
+  try{
+    const card = await Card.findByIdAndUpdate({ _id: req.params.id }, { $set: { title: req.body.title, description: req.body.description, state: req.body.state } }, { new: true });
+    res.json(card);
+  } catch(err){
+    return res.status(404).send(err.message);
+  }
+});
 
 module.exports = router;

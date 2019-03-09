@@ -30,8 +30,8 @@ import { ProjectsListComponent } from './components/projects/projects-list/proje
 import { ProjectViewComponent } from './components/projects/project-view/project-view.component';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { IterKanbanComponent } from './components/iter-kanban/iter-kanban.component';
-import { CreateCardComponent } from './components/iter-kanban/create/create.component';
+import { IterationViewComponent } from './components/iteration-view/iteration-view.component';
+import { CreateCardComponent } from './components/iteration-view/create/create.component';
 
 
 @NgModule({
@@ -43,7 +43,7 @@ import { CreateCardComponent } from './components/iter-kanban/create/create.comp
     ProjectViewComponent,
     CreateIterationComponent,
     EditIterationComponent,
-    IterKanbanComponent,
+    IterationViewComponent,
     CreateCardComponent
   ],
   imports: [
