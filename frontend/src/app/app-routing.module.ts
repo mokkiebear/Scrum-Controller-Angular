@@ -1,3 +1,5 @@
+import { SignupComponent } from './components/auth/signup/signup.component';
+import { SigninComponent } from './components/auth/signin/signin.component';
 import { IterationViewComponent } from './components/iteration-view/iteration-view.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -12,6 +14,7 @@ import { CreateIterationComponent } from './components/iterations/create/create.
 import { EditIterationComponent } from './components/iterations/edit/edit.component';
 
 import { CreateCardComponent } from './components/iteration-view/create/create.component';
+import { EditCardComponent } from './components/iteration-view/edit-card/edit-card.component';
 
 const routes: Routes = [
   //Get the list of projects
@@ -27,7 +30,11 @@ const routes: Routes = [
   { path: 'iterations/create/:id', component: CreateIterationComponent, pathMatch: 'full' },
   { path: 'iterations/edit/:id', component: EditIterationComponent },
 
-  { path: 'cards/create/:id', component: CreateCardComponent, pathMatch: 'full' }
+  { path: 'cards/create/:id', component: CreateCardComponent, pathMatch: 'full' },
+  { path: 'cards/edit/:id', component: EditCardComponent },
+
+  {path: 'signin', component: SigninComponent },
+  {path: 'signup', component: SignupComponent }
 ];
 
 @NgModule({

@@ -8,35 +8,36 @@ export class CardService {
 
   constructor(private http: HttpClient) { }
   url = 'http://localhost:3000';
-  
-  getCardById(id){
+
+  getCardById(id) {
     return this.http.get(`${this.url}/cards/${id}`);
   }
 
-  getCards(itId){
+  getCards(itId) {
     return this.http.get(`${this.url}/iterations/${itId}/cards`);
   }
 
-  createCard(itId, title, description, state){
+  createCard(itId, title, description, storyPoint, state) {
     const card = {
       _parent: itId,
-      title: title,
-      description: description,
-      state: state
+      title,
+      description,
+      storyPoint,
+      state
     };
     return this.http.post(`${this.url}/cards`, card);
   }
 
-  updateCard(id, title, description, state){
+  updateCard(id, title, description, state) {
     const card = {
-      title: title,
-      description: description,
-      state: state
+      title,
+      description,
+      state
     };
     return this.http.put(`${this.url}/cards/${id}`, card);
   }
 
-  deleteCard(cardId){
+  deleteCard(cardId) {
     return this.http.delete(`${this.url}/cards/${cardId}`);
   }
 }

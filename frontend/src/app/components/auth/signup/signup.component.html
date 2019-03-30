@@ -1,0 +1,33 @@
+<div>
+  <br>
+  <mat-card>
+    <section class='mat-typography'>
+      <h3>Регистрация</h3>
+    </section>
+    <mat-divider></mat-divider>
+    <br>
+    <form [formGroup]='registerForm' class='register-form'>
+      <mat-form-field appearance="standard" class='field-full-width'>
+        <mat-label>Введите ваше имя</mat-label>
+        <input matInput placeholder="Имя" formControlName='name' #name required minlength="3">
+        <mat-error *ngIf="name.required">Введите ваше имя.</mat-error>
+        <mat-error *ngIf="!name.minlength">Имя должно состоять минимум из 3 букв.</mat-error>
+      </mat-form-field>
+      <br><br/>
+      <mat-form-field appearance="standard" class='field-full-width'>
+        <mat-label>Введите Email</mat-label>
+        <input matInput type='email' placeholder="Электронный адрес" formControlName='email' #email required>
+        <mat-error *ngIf="email.required">Введите почту</mat-error>
+      </mat-form-field>
+      <br><br>
+      <mat-form-field appearance="standard" class='field-full-width'>
+        <mat-label>Введите пароль</mat-label>
+        <input matInput type='password' placeholder="Пароль" formControlName='password' #password required minlength="8">
+        <mat-error *ngIf="password.required">Введите пароль</mat-error>
+      </mat-form-field>
+      <br><br>
+      <button mat-raised-button color='accent' routerLink='/projects'>Назад</button>
+      <button type='submit' (click)='addUser(name.value, email.value, password.value)' [disabled]='registerForm.pristine || registerForm.invalid' mat-raised-button color='primary'>Сохранить</button>
+    </form>
+  </mat-card>
+</div>

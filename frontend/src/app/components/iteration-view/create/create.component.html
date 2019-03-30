@@ -14,15 +14,20 @@
       <mat-form-field class='field-full-width'>
         <textarea matInput placeholder='Описание' formControlName='description' #description></textarea>
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field class='field-full-width'>
+        <input matInput type='number' placeholder='Story Point' formControlName='storyPoint' #storyPoint>
+      </mat-form-field>
+     <mat-form-field>
+        <label>Состояние:</label>
         <mat-select  formControlName='state' #state>
           <mat-option *ngFor='let st of states' [value]='st'>{{st}}</mat-option>
         </mat-select>
       </mat-form-field>
       <br>
+      <ng-template *ngIf='state.value == "BackLog"'>Else template</ng-template> 
       <br><br>
       <button mat-raised-button color='accent' [routerLink]="['/iterations', itId]">Назад</button>
-      <button type='submit' (click)='createCard(title.value, description.value, state.value)' [disabled]='createCardForm.pristine || createCardForm.invalid' mat-raised-button color='primary'>Сохранить</button>
+      <button type='submit' (click)='createCard(title.value, description.value, storyPoint.value, state.value)' [disabled]='createCardForm.pristine || createCardForm.invalid' mat-raised-button color='primary'>Сохранить</button>
     </form>
   </mat-card>
 </div>

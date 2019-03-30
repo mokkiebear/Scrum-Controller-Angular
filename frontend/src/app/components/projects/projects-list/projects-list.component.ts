@@ -14,6 +14,7 @@ export class ProjectsListComponent implements OnInit {
 
   projects: Project[];
   displayedColumns = ['title', 'description', 'date', 'actions'];
+  isLoad: Boolean = false;
 
   constructor(private projectService: ProjectService, private router: Router) { }
 
@@ -28,6 +29,7 @@ export class ProjectsListComponent implements OnInit {
         this.projects = data;
         console.log('Data requested!');
         console.log(this.projects);
+        this.isLoad = true;
       });
   }
 

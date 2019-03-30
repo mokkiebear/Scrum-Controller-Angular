@@ -1,5 +1,6 @@
+import { AuthService } from './auth.service';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -7,33 +8,34 @@ import { HttpClient } from '@angular/common/http';
 export class ProjectService {
 
   url = 'http://localhost:3000';
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
-  getProjects(){
+
+  getProjects() {
     return this.http.get(`${this.url}/projects`);
   }
 
-  getProjectById(id){
+  getProjectById(id) {
     return this.http.get(`${this.url}/projects/${id}`);
   }
 
-  createProject(title, description){
+  createProject(title, description) {
     const project = {
-      title: title,
-      description: description
+      title,
+      description
     };
-    return this.http.post(`${this.url}/projects`, project);
+    return this.http.post(`${this.url}/projects`, project/*, httpOptions*/);
   }
 
-  deleteProject(id){
+  deleteProject(id) {
     return this.http.delete(`${this.url}/projects/${id}`);
   }
 
-  updateProject(id, title, description){
+  updateProject(id, title, description) {
     const project = {
-      title: title,
-      description: description
-    }
+      title,
+      description
+    };
     return this.http.put(`${this.url}/projects/${id}`, project);
   }
 }

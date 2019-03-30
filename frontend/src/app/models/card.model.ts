@@ -1,7 +1,8 @@
 export interface Card {
-    _parent: String;
-    title: String;
-    description: String;
-    state: String;
+    _parent: string;
+    title: string;
+    description: string;
+    state: string;
+    storyPoint: number;
     date: Date;
 }

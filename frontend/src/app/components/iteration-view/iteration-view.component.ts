@@ -8,13 +8,15 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 
 @Component({
-  selector: 'iteration-view',
+  selector: 'app-iteration-view',
   templateUrl: './iteration-view.component.html',
   styleUrls: ['./iteration-view.component.css']
 })
 export class IterationViewComponent implements OnInit {
 
-  itId: String;
+  isLoading = false;
+
+  itId: string;
   iteration: Iteration;
 
   cards: Card[];
@@ -22,33 +24,47 @@ export class IterationViewComponent implements OnInit {
   todo = [];
   doing = [];
   done = [];
+  backLog = [];
 
-  constructor(private cardService: CardService, private iterationService: IterationService, private router: Router, private route: ActivatedRoute, private snackBar: MatSnackBar) { }
+  constructor(private cardService: CardService,
+              private iterationService: IterationService,
+              private router: Router,
+              private route: ActivatedRoute,
+              private snackBar: MatSnackBar) { }
 
   ngOnInit() {
+    this.isLoading = true;
     this.route.params.subscribe(params => {
       this.itId = params.id;
+      this.iterationService.getIterationById(this.itId).subscribe(res => {
+        this.iteration = res as Iteration;
+      });
       this.fetchCards();
     });
   }
 
-  fetchCards(){
+  fetchCards() {
     this.todo = [];
     this.doing = [];
     this.done = [];
+    this.backLog = [];
     this.cardService.getCards(this.itId).subscribe(res => {
       this.cards = res as Card[];
-      for (let card of this.cards){
-        switch(card.state){
+      for (const card of this.cards) {
+        switch (card.state) {
           case 'todo': this.todo.push(card); break;
           case 'doing': this.doing.push(card); break;
           case 'done': this.done.push(card); break;
+          case 'BackLog': this.backLog.push(card); break;
         }
       }
+      this.isLoading = false;
     });
   }
-  
+
   drop(event: CdkDragDrop<string[]>) {
+    this.isLoading = true;
+
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -60,30 +76,32 @@ export class IterationViewComponent implements OnInit {
     this.snackBar.open('Изменения сохраняются...', 'OK', { duration: 1000 });
   }
 
-  //This method save the state of card
-  save(event, item){
+  // This method save the state of card
+  save(event, item) {
     let state;
-    
-    if (event.container.id.indexOf('0') != -1){
+    if (event.container.id.indexOf('0') !== -1) {
+      state = 'BackLog';
+    } else if (event.container.id.indexOf('1') !== -1) {
       state = 'todo';
-    }
-    else if (event.container.id.indexOf('1') != -1){
+    } else if (event.container.id.indexOf('2') !== -1) {
       state = 'doing';
-    }
-    else {
+    } else {
       state = 'done';
     }
-    
+
     this.cardService.updateCard(item._id, item.title, item.description, state).subscribe(res => {
-      console.log(res);
       this.snackBar.open('Изменения сохранены!', 'OK', { duration: 1000 });
+      this.isLoading = false;
     });
   }
 
-  deleteCard(cardId){
+  deleteCard(cardId) {
     this.cardService.deleteCard(cardId).subscribe(res => {
-      console.log(res);
       this.fetchCards();
     });
+  }
+
+  editCard(cardId) {
+    this.router.navigate([`/cards/edit/${cardId}`]);
   }
 }

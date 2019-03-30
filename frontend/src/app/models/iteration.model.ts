@@ -1,8 +1,8 @@
 import { Card } from './card.model';
 
 export interface Iteration {
-    _parent: String;
-    title: String;
-    description: String;
+    _parent: string;
+    title: string;
+    description: string;
     cards: [Card];
 }

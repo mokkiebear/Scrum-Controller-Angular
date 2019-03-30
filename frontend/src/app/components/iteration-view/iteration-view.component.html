@@ -1,72 +1,118 @@
-<div *ngIf='itId'>
+<mat-spinner *ngIf='isLoading'></mat-spinner>
+
+<div *ngIf='iteration'>
   <button mat-raised-button color='primary' [routerLink]="['/cards', 'create', itId]">
     Создать карту
   </button>
-  
+  <button mat-raised-button color='warn' [routerLink]="['/project', iteration._parent]">Назад</button>
+  <br />
   <!-- Это для карточек итераций -->
   <mat-card class='mat-card'>
+    <h2>SCRUM - Доска</h2>
     <div cdkDropListGroup>
-  
+
+      <div class="example-container" id='backLog'>
+        <h2>BackLog</h2>
+        <div cdkDropList [cdkDropListData]="backLog" #backLogList="cdkDropList"
+          [cdkDropListConnectedTo]="[todoList, doneList, doingList]" class="example-list"
+          (cdkDropListDropped)="drop($event)">
+          <div class="example-box" *ngFor="let item of backLog" cdkDrag (cdkDragDropped)="save($event, item)">
+            <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+            <h3 class='card-header'>{{item.title}}</h3>
+            <p class='card-description'>{{item.description}}</p>
+            <div class='card-story-point'>SP: {{item.storyPoint}}</div>
+            <mat-menu #appMenu="matMenu" class='card-menu'>
+              <button mat-menu-item (click)='editCard(item._id)'>
+                <mat-icon class='mat-icon-edit'>edit</mat-icon>Изменить
+              </button>
+              <button mat-menu-item (click)='deleteCard(item._id)'>
+                <mat-icon class='mat-icon-delete'>delete</mat-icon>Удалить
+              </button>
+            </mat-menu>
+
+            <button mat-icon-button [matMenuTriggerFor]="appMenu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+
       <div class="example-container">
         <h2>Нужно сделать</h2>
-        <div cdkDropList [cdkDropListData]="todo" #todoList="cdkDropList" [cdkDropListConnectedTo]="[doneList, doingList]"
-          class="example-list" (cdkDropListDropped)="drop($event)">
+        <div cdkDropList [cdkDropListData]="todo" #todoList="cdkDropList"
+          [cdkDropListConnectedTo]="[doneList, doingList, backLogList]" class="example-list"
+          (cdkDropListDropped)="drop($event)">
           <div class="example-box" *ngFor="let item of todo" cdkDrag (cdkDragDropped)="save($event, item)">
             <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
             <h3 class='card-header'>{{item.title}}</h3>
             <p class='card-description'>{{item.description}}</p>
+            <div class='card-story-point'>SP: {{item.storyPoint}}</div>
             <mat-menu #appMenu="matMenu" class='card-menu'>
-              <button mat-menu-item><mat-icon class='mat-icon-edit'>edit</mat-icon>Изменить</button>
-              <button mat-menu-item (click)='deleteCard(item._id)'><mat-icon class='mat-icon-delete'>delete</mat-icon>Удалить</button>
+              <button mat-menu-item (click)='editCard(item._id)'>
+                <mat-icon class='mat-icon-edit'>edit</mat-icon>Изменить
+              </button>
+              <button mat-menu-item (click)='deleteCard(item._id)'>
+                <mat-icon class='mat-icon-delete'>delete</mat-icon>Удалить
+              </button>
             </mat-menu>
-            
+
             <button mat-icon-button [matMenuTriggerFor]="appMenu">
               <mat-icon>more_vert</mat-icon>
             </button>
           </div>
         </div>
       </div>
-  
+
       <div class="example-container">
         <h2>В процессе</h2>
-        <div class='example-list' cdkDropList [cdkDropListData]="doing" #doingList="cdkDropList" [cdkDropListConnectedTo]="[todoList, doneList]"
-          (cdkDropListDropped)="drop($event)">
+        <div class='example-list' cdkDropList [cdkDropListData]="doing" #doingList="cdkDropList"
+          [cdkDropListConnectedTo]="[todoList, doneList, backLogList]" (cdkDropListDropped)="drop($event)">
           <div class='example-box' *ngFor="let item of doing" cdkDrag (cdkDragDropped)="save($event, item)">
             <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
             <h3 class='card-header'>{{item.title}}</h3>
             <p class='card-description'>{{item.description}}</p>
+            <div class='card-story-point'>SP: {{item.storyPoint}}</div>
             <mat-menu #appMenu="matMenu" class='card-menu'>
-              <button mat-menu-item><mat-icon class='mat-icon-edit'>edit</mat-icon>Изменить</button>
-              <button mat-menu-item (click)='deleteCard(item._id)'><mat-icon class='mat-icon-delete'>delete</mat-icon>Удалить</button>
+              <button mat-menu-item (click)='editCard(item._id)'>
+                <mat-icon class='mat-icon-edit'>edit</mat-icon>Изменить
+              </button>
+              <button mat-menu-item (click)='deleteCard(item._id)'>
+                <mat-icon class='mat-icon-delete'>delete</mat-icon>Удалить
+              </button>
             </mat-menu>
-            
+
             <button mat-icon-button [matMenuTriggerFor]="appMenu">
               <mat-icon>more_vert</mat-icon>
             </button>
           </div>
         </div>
       </div>
-  
+
       <div class="example-container">
         <h2>Сделано</h2>
-        <div class='example-list' cdkDropList [cdkDropListData]="done" #doneList="cdkDropList" [cdkDropListConnectedTo]="[todoList, doingList]"
-          (cdkDropListDropped)="drop($event)">
+        <div class='example-list' cdkDropList [cdkDropListData]="done" #doneList="cdkDropList"
+          [cdkDropListConnectedTo]="[todoList, doingList]" (cdkDropListDropped)="drop($event)">
           <div class='example-box' *ngFor="let item of done" cdkDrag (cdkDragDropped)="save($event, item)">
             <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
             <h3 class='card-header'>{{item.title}}</h3>
             <p class='card-description'>{{item.description}}</p>
+            <div class='card-story-point'>SP: {{item.storyPoint}}</div>
             <mat-menu #appMenu="matMenu" class='card-menu'>
-              <button mat-menu-item><mat-icon class='mat-icon-edit'>edit</mat-icon>Изменить</button>
-              <button mat-menu-item (click)='deleteCard(item._id)'><mat-icon class='mat-icon-delete'>delete</mat-icon>Удалить</button>
+              <button mat-menu-item (click)='editCard(itId)'>
+                <mat-icon class='mat-icon-edit'>edit</mat-icon>Изменить
+              </button>
+              <button mat-menu-item (click)='deleteCard(item._id)'>
+                <mat-icon class='mat-icon-delete'>delete</mat-icon>Удалить
+              </button>
             </mat-menu>
-            
+
             <button mat-icon-button [matMenuTriggerFor]="appMenu">
               <mat-icon>more_vert</mat-icon>
             </button>
           </div>
         </div>
       </div>
-  
+
     </div>
-  </mat-card>  
+  </mat-card>
 </div>

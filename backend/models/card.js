@@ -9,12 +9,22 @@ const Card = mongoose.model('Card', new mongoose.Schema({
 		maxlength: 50
 	},
 	description: {type: String, required: false},
-	state: {type: String, default: 'todo'},
+	state: {
+		type: String, 
+		enum: ['todo', 'doing', 'done','BackLog']
+	},
+	storyPoint: { type: Number, required: true, min: 1, max: 20 },
 	date: { type: Date, default: Date.now }
 }));
 
 function validateCard(card) {
-	const schema = { _parent: Joi.string(), title: Joi.string().min(3).required(), description: Joi.string().allow(''), state: Joi.string() };
+	const schema = { 
+		_parent: Joi.string(), 
+		title: Joi.string().min(3).required(), 
+		description: Joi.string().allow(''), 
+		storyPoint: Joi.number().min(1).max(20) , 
+		state: Joi.string() 
+	};
 	return Joi.validate(card, schema);
 }
 

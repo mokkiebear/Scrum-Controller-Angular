@@ -1,4 +1,5 @@
-<div>
+<mat-spinner *ngIf='!isLoad'></mat-spinner>
+<div *ngIf='isLoad'>
   <br>
   <mat-card class='mat-card'>
     <button mat-raised-button color='primary' routerLink='/projects/create'>

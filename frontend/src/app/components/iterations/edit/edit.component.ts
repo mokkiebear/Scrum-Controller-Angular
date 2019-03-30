@@ -5,21 +5,25 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { IterationService } from 'src/app/services/iteration.service';
 import { MatSnackBar } from '@angular/material';
 @Component({
-  selector: 'edit-iteration',
+  selector: 'app-edit-iteration',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css']
 })
 export class EditIterationComponent implements OnInit {
 
-  id: String;
+  id: string;
   iteration: Iteration;
 
   updateForm: FormGroup;
-  constructor(private iterationService: IterationService, private router: Router, private route: ActivatedRoute, private fb: FormBuilder, private snackBar: MatSnackBar) { 
+  constructor(private iterationService: IterationService,
+              private router: Router,
+              private route: ActivatedRoute,
+              private fb: FormBuilder,
+              private snackBar: MatSnackBar) {
     this.createForm();
   }
 
-  createForm(){
+  createForm() {
     this.updateForm = this.fb.group({
       title: ['', Validators.required],
       description: ''
@@ -30,14 +34,14 @@ export class EditIterationComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.id = params.id;
       this.iterationService.getIterationById(this.id).subscribe(res => {
-        this.iteration = <Iteration>res;
+        this.iteration = res as Iteration;
         this.updateForm.get('title').setValue(this.iteration.title);
         this.updateForm.get('description').setValue(this.iteration.description);
       });
     });
   }
 
-  updateIteration(title, description){
+  updateIteration(title, description) {
     this.iterationService.updateIteration(this.id, title, description).subscribe(res => {
       this.snackBar.open('Итерация успешно изменена!', 'OK', {
         duration: 2000

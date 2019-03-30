@@ -14,7 +14,7 @@ router.get('/:id', async function(req, res){
     const card = await Card.findOne({ _id: req.params.id });
     res.json(card);
   }
-  catch(err){
+  catch(ex){
     return res.status(404).send('The card with the given id was not found!');
   }
   
@@ -28,6 +28,7 @@ router.post('/', async function(req, res){
     _parent: req.body._parent,
     title: req.body.title,
     description: req.body.description,
+    storyPoint: req.body.storyPoint,
     state: req.body.state
   });
   card = await card.save();

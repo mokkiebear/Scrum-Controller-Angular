@@ -1,0 +1,23 @@
+<div *ngIf='card'>
+    <br>
+    <mat-card>
+      <section class='mat-typography'>
+        <h3>Изменение карточки</h3>
+      </section>
+      <mat-divider></mat-divider>
+      <br>
+      <form [formGroup]='updateForm' class='update-form'>
+        <mat-form-field class='field-full-width'>
+          <input matInput placeholder='Название карты' formControlName='title' #title>
+        </mat-form-field>
+        <br>
+        <mat-form-field class='field-full-width'>
+          <textarea matInput placeholder='Описание' formControlName='description' #description></textarea>
+        </mat-form-field>
+        <br>
+        <br><br>
+        <button mat-raised-button color='accent' [routerLink]="['/iterations', card._parent]">Назад</button>
+        <button type='submit' (click)='updateCard(title.value, description.value)' [disabled]='updateForm.pristine || updateForm.invalid' mat-raised-button color='primary'>Сохранить</button>
+      </form>
+    </mat-card>
+  </div>
