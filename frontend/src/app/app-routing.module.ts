@@ -1,11 +1,11 @@
+import { AuthGuard } from './components/auth/auth.guard';
 import { SignupComponent } from './components/auth/signup/signup.component';
 import { SigninComponent } from './components/auth/signin/signin.component';
 import { IterationViewComponent } from './components/iteration-view/iteration-view.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { CreateComponent } from './components/projects/create/create.component';
-import { EditComponent } from './components/projects/edit/edit.component';
+import { WelcomeComponent } from './components/welcome/welcome.component';
 
 import { ProjectsListComponent } from './components/projects/projects-list/projects-list.component';
 import { ProjectViewComponent } from './components/projects/project-view/project-view.component';
@@ -17,21 +17,18 @@ import { CreateCardComponent } from './components/iteration-view/create/create.c
 import { EditCardComponent } from './components/iteration-view/edit-card/edit-card.component';
 
 const routes: Routes = [
-  //Get the list of projects
-  { path: 'projects', component: ProjectsListComponent }, 
-  //Create new project
-  { path: 'projects/create', component: CreateComponent },
-  //Edit the existing project (id of project)
-  { path: 'projects/edit/:id', component: EditComponent },
-  //View the selected project (id of project)
+  {path: '', component: WelcomeComponent},
+  // Get the list of projects
+  { path: 'projects', component: ProjectsListComponent, canActivate: [AuthGuard] },
+  // View the selected project (id of project)
   { path: 'project/:id', component: ProjectViewComponent },
-  
-  { path: 'iterations/:id', component: IterationViewComponent },
-  { path: 'iterations/create/:id', component: CreateIterationComponent, pathMatch: 'full' },
-  { path: 'iterations/edit/:id', component: EditIterationComponent },
 
-  { path: 'cards/create/:id', component: CreateCardComponent, pathMatch: 'full' },
-  { path: 'cards/edit/:id', component: EditCardComponent },
+  { path: 'iterations/:id', component: IterationViewComponent, canActivate: [AuthGuard] },
+  { path: 'iterations/create/:id', component: CreateIterationComponent, canActivate: [AuthGuard] },
+  { path: 'iterations/edit/:id', component: EditIterationComponent, canActivate: [AuthGuard] },
+
+  { path: 'cards/create/:id', component: CreateCardComponent, canActivate: [AuthGuard] },
+  { path: 'cards/edit/:id', component: EditCardComponent, canActivate: [AuthGuard] },
 
   {path: 'signin', component: SigninComponent },
   {path: 'signup', component: SignupComponent }
@@ -39,6 +36,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [AuthGuard]
 })
 export class AppRoutingModule { }

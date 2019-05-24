@@ -14,12 +14,15 @@
       <mat-form-field class='field-full-width'>
         <textarea matInput placeholder='Описание' formControlName='description' #description></textarea>
       </mat-form-field>
+      <mat-form-field class='field-full-width'>
+        <textarea matInput placeholder='Цель итерации' formControlName='goal' #goal></textarea>
+      </mat-form-field>
       <!--<mat-form-field class='field-full-width'>
           <input type='datetime' matInput placeholder='Дата создания проекта' formControlName='date' #date>
         </mat-form-field>-->
       <br><br>
       <button mat-raised-button color='accent' [routerLink]="['/project', iteration._parent]">Назад</button>
-      <button type='submit' (click)='updateIteration(title.value, description.value)' [disabled]='updateForm.pristine || updateForm.invalid'
+      <button type='submit' (click)='updateIteration(title.value, description.value, goal.value)' [disabled]='updateForm.pristine || updateForm.invalid'
         mat-raised-button color='primary'>Сохранить</button>
     </form>
   </mat-card>

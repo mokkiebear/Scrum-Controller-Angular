@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>{{ dialogTitle }}</h2>
+<mat-divider></mat-divider>
+<mat-dialog-content [formGroup]="createProjectForm">
+      <mat-form-field class='field-full-width'>
+        <input matInput placeholder="Название проекта" formControlName='title' #title required minlength="3">
+        <mat-error *ngIf="title.required">Введите название проекта.</mat-error>
+        <mat-error *ngIf="!title.minlength">Название проекта должно состоять минимум из 3 букв.</mat-error>
+      </mat-form-field>
+      <br/><br/>
+      <mat-form-field class='field-full-width'>
+        <textarea matInput cdkTextareaAutosize placeholder='Описание' formControlName='description' #description></textarea>
+      </mat-form-field>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-raised-button color='accent' (click)="close()">
+      <mat-icon class='icon'>close</mat-icon>
+      <span class='label'>Отменить</span>
+    </button>
+    <button type='submit' class="mat-raised-button mat-primary" (click)='createProject(title, description)' [disabled]='createProjectForm.pristine || createProjectForm.invalid' mat-raised-button >
+        <mat-icon class='icon'>done</mat-icon>
+        <span class='label'>Создать проект</span>
+    </button>
+</mat-dialog-actions>

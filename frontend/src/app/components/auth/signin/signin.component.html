@@ -1,14 +1,20 @@
-<mat-card>
+<mat-card class='mat-elevation-z8'>
+  <h2>Авторизация</h2>
+  <mat-divider></mat-divider>
+  <br>
   <mat-spinner *ngIf='isLoading'></mat-spinner>
   <form (submit)='onLogin(loginForm)' *ngIf='!isLoading' #loginForm='ngForm'>
     <mat-form-field>
-      <input matInput name='email' ngModel type='email' placeholder='E-Mail' #emailInput='ngModel' required email>
+      <input matInput name='email' ngModel type='email' placeholder='Электронный адрес' #emailInput='ngModel' required email>
       <mat-error *ngIf='emailInput.invalid'>Please enter a valid E-Mail.</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input matInput name='password' ngModel type='password' placeholder='password' #passwordInput='ngModel' required>
+      <input matInput name='password' ngModel type='password' placeholder='Пароль' #passwordInput='ngModel' required>
       <mat-error *ngIf='passwordInput.invalid'>Please enter a valid password.</mat-error>
     </mat-form-field>
-    <button type='submit' mat-raised-button color='accent'>Войти</button>
+    <button type='submit' mat-raised-button color='accent'>
+      <mat-icon>input</mat-icon>
+      <span>Войти</span>
+    </button>
   </form>
 </mat-card>

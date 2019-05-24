@@ -26,7 +26,8 @@ export class EditIterationComponent implements OnInit {
   createForm() {
     this.updateForm = this.fb.group({
       title: ['', Validators.required],
-      description: ''
+      description: '',
+      goal: ''
     });
   }
 
@@ -37,12 +38,13 @@ export class EditIterationComponent implements OnInit {
         this.iteration = res as Iteration;
         this.updateForm.get('title').setValue(this.iteration.title);
         this.updateForm.get('description').setValue(this.iteration.description);
+        this.updateForm.get('goal').setValue(this.iteration.goal);
       });
     });
   }
 
-  updateIteration(title, description) {
-    this.iterationService.updateIteration(this.id, title, description).subscribe(res => {
+  updateIteration(title, description, goal) {
+    this.iterationService.updateIteration(this.id, title, description, goal, this.iteration.state, this.iteration.finishDate).subscribe(res => {
       this.snackBar.open('Итерация успешно изменена!', 'OK', {
         duration: 2000
       });

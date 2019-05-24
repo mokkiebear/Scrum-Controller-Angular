@@ -8,10 +8,6 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
 
-  private user: User;
-
-  private token: string;
-  private isAuthenticated = false;
   url = 'http://localhost:3000';
 
   constructor(private http: HttpClient, private router: Router) { }
@@ -22,7 +18,7 @@ export class AuthService {
   }
 
   getUser() {
-    return this.user;
+    return localStorage.getItem('currentUser');
   }
 
   // Вход
@@ -33,9 +29,10 @@ export class AuthService {
     };
 
     this.http.post(`${this.url}/auth`, user, { observe: 'response' }).subscribe((res: HttpResponse<Response>) => {
-      this.token = res.headers.get('authorization');
-      localStorage.setItem('token', this.token);
-      this.isAuthenticated = true;
+      const token = res.headers.get('authorization');
+      const userInfo = res.body as object;
+      localStorage.setItem('token', token);
+      localStorage.setItem('currentUser', JSON.stringify(userInfo));
       this.refresh();
       this.router.navigate(['/projects']);
     });
@@ -43,8 +40,9 @@ export class AuthService {
 
   // Выход
   logout() {
-    this.isAuthenticated = false;
+    // Удаление токена и информации и пользователе из localstorage
     localStorage.removeItem('token');
+    localStorage.removeItem('currentUser');
     this.refresh();
     this.router.navigate(['/']);
   }
@@ -59,7 +57,16 @@ export class AuthService {
     return this.http.post(`${this.url}/users`, user);
   }
 
+  getUserByEmail(email) {
+    return this.http.get(`${this.url}/users/${email}`);
+  }
+
+  // Обновление страницы (для обновления header)
   refresh(): void {
     window.location.reload();
+  }
+
+  updateUserProjects(userId, projectId) {
+    return this.http.put(`${this.url}/users/`, { userId, projectId });
   }
 }

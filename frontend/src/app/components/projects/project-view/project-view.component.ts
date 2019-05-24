@@ -12,12 +12,16 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./project-view.component.css']
 })
 export class ProjectViewComponent implements OnInit {
-  prId: String;
-
+  // id проекта
+  prId: string;
+  // Проект (для отображения информации о проекте)
   project: Project;
+  // Итерации проекта
   iterations: Iteration[] = [];
-  
-  constructor(private projectService: ProjectService, private iterationService: IterationService, private router: Router, private route: ActivatedRoute) { }
+
+  constructor(private projectService: ProjectService,
+              private iterationService: IterationService,
+              private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -26,28 +30,47 @@ export class ProjectViewComponent implements OnInit {
     });
   }
 
-  //Удаление итерации
-  deleteIteration(id){
+  // Удаление итерации
+  deleteIteration(id) {
     this.iterationService.deleteIteration(id).subscribe(() => {
       this.fetchIterations();
     });
   }
 
-  editIteration(id){
+  editIteration(id) {
     this.router.navigate([`/iterations/edit/${id}`]);
   }
 
-  fetchIterations(){
+  fetchIterations() {
     this.iterations = [];
     this.projectService.getProjectById(this.prId).subscribe((res: Project) => {
       this.project = res;
-        this.iterationService.getIterations(this.prId).subscribe(res => {
-          this.iterations = res as Iteration[];
-        });    
+      this.iterationService.getIterations(this.prId).subscribe(iterations => {
+        this.iterations = iterations as Iteration[];
+      });
     });
   }
 
-  openIteration(id){
+  openIteration(id) {
     this.router.navigate([`/iterations/${id}`]);
+  }
+
+  // Итерация начата: сменить состояние на 'doing'
+  changeStateOfIteration(id, state) {
+    const iter = this.iterations.find(it => {
+      return it._id === id;
+    }) as Iteration;
+    this.iterationService.updateIteration(id, iter.title, iter.description, iter.goal, state, iter.finishDate).subscribe(res => {
+      console.log(res);
+      this.fetchIterations();
+    });
+  }
+
+  confirmSummary(id, summary) {
+    console.log(id, summary);
+    this.iterationService.createSummary(id, summary).subscribe(res => {
+      console.log(res);
+      this.fetchIterations();
+    });
   }
 }

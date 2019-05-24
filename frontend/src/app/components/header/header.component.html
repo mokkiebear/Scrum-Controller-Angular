@@ -1,0 +1,90 @@
+<mat-sidenav-container>
+    <mat-sidenav #sidenav role="navigation" mode="over">
+        <mat-nav-list>
+            <button mat-icon-button (click)="sidenav.toggle()" matTooltip="Скрыть меню" style="height: 0;">
+                <mat-icon style="padding-left: 10px;">arrow_back_ios</mat-icon>
+            </button>
+            <br><br>
+            <mat-divider></mat-divider>
+            <h2 matSubheader>Навигация</h2>
+            <a mat-list-item routerLink='/'>
+                <mat-icon class="icon">home</mat-icon>
+                <span class="label">Главная</span>
+            </a>
+            <a mat-list-item routerLink='/projects'>
+                <mat-icon class="icon">work</mat-icon>
+                <span class="label">Проекты</span>
+            </a>
+            <mat-divider></mat-divider>
+            <h2 matSubheader>Управление</h2>
+            <ng-template #notLoggedIn1>
+                <a mat-list-item routerLink='/signin' matTooltip="Вход в аккаунт">
+                    <mat-icon class="icon">input</mat-icon>
+                    <span class="label">Войти</span>
+                </a>
+                <a mat-list-item routerLink='/signup' matTooltip="Создать новый аккаунт">
+                    <mat-icon class="icon">person_add</mat-icon>
+                    <span class="label">Создать аккаунт</span>
+                </a>
+            </ng-template>
+            <a mat-list-item (click)='onLogout()' *ngIf='currentUser; else notLoggedIn1'>
+                <mat-icon class="icon">power_settings_new</mat-icon>
+                <span class="label">Выйти</span>
+            </a>          
+        </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+        <mat-toolbar color="primary">
+            <div fxHide.gt-xs>
+                <button mat-icon-button (click)="sidenav.toggle()">
+                    <mat-icon>menu</mat-icon>
+                </button>
+            </div>
+            <div>
+                <a>Управление проектами</a>
+            </div>
+            <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
+                <ul fxLayout fxLayoutGap="15px" class="navigation-items"> 
+                    <li>
+                        <a routerLink='/'>
+                            <mat-icon class="icon">home</mat-icon>
+                            <span class="label">Главная</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink='/projects'>
+                            <mat-icon class="icon">work</mat-icon>
+                            <span class="label">Проекты</span>
+                        </a>
+                    </li>
+                    <li *ngIf='currentUser'>
+                        <span>Пользователь: {{ currentUser.name }}</span>
+                    </li>
+                    <ng-template #notLoggedIn>
+                        <li>
+                            <a routerLink='/signin' matTooltip="Вход в аккаунт">
+                                <mat-icon class="icon">input</mat-icon>
+                                <span class="label">Войти</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a routerLink='/signup' matTooltip="Создать новый аккаунт">
+                                <mat-icon class="icon">person_add</mat-icon>
+                                <span class="label">Создать аккаунт</span>
+                            </a>
+                        </li>
+                    </ng-template>
+                    <li *ngIf='currentUser; else notLoggedIn'>
+                        <a (click)='onLogout()'>
+                            <mat-icon class="icon">power_settings_new</mat-icon>
+                            <span class="label">Выйти</span>
+                        </a>
+                    </li>            
+                </ul>
+            </div>
+        </mat-toolbar>
+        <main>
+        </main>
+    </mat-sidenav-content>
+</mat-sidenav-container>

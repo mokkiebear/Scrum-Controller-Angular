@@ -1,0 +1,19 @@
+.field-full-width{
+  width: 100%;
+}
+
+.icon {
+  display: inline-block;
+  height: 25px;
+  margin: 0 auto;
+  vertical-align: middle;
+  width: auto;
+}
+
+.label {
+  display: inline-block;
+  padding-left: 0px;
+  line-height: 30px;
+  margin: 0;
+  width: 85%;
+}

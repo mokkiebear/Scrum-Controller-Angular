@@ -1,12 +1,6 @@
-<div>
-  <br>
-  <mat-card>
-    <section class='mat-typography'>
-      <h3>Создание проекта</h3>
-    </section>
-    <mat-divider></mat-divider>
-    <br>
-    <form [formGroup]='createProjectForm' class='create-form'>
+<h2 mat-dialog-title>{{ dialogTitle }}</h2>
+<mat-divider></mat-divider>
+<mat-dialog-content [formGroup]="editProjectForm">
       <mat-form-field appearance="standard" class='field-full-width'>
         <mat-label>Название проекта</mat-label>
         <input matInput placeholder="Название проекта" formControlName='title' #title required minlength="3">
@@ -17,9 +11,16 @@
       <mat-form-field class='field-full-width'>
         <textarea matInput cdkTextareaAutosize placeholder='Описание' formControlName='description' #description></textarea>
       </mat-form-field>
-      <br><br>
-      <button mat-raised-button color='accent' routerLink='/projects'>Назад</button>
-      <button type='submit' (click)='createProject(title, description)' [disabled]='createProjectForm.pristine || createProjectForm.invalid' mat-raised-button color='primary'>Сохранить</button>
-    </form>
-  </mat-card>
-</div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-raised-button color='accent' (click)="close()">
+      <mat-icon class='icon'>close</mat-icon>
+      <span class='label'>Отменить</span>
+    </button>
+    <button type='submit' color='primary' (click)='editProject(title, description)' [disabled]='editProjectForm.pristine || editProjectForm.invalid' mat-raised-button >
+        <mat-icon class='icon'>done</mat-icon>
+        <span class='label'>Сохранить изменения</span>
+    </button>
+</mat-dialog-actions>

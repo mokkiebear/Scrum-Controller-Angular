@@ -1,0 +1,14 @@
+<div>
+  <h2>Добавить пользователя на проект</h2>
+  <label>
+    E-mail пользователя:
+    <input type="email" (keyup.enter)='findUser($event.target.value)'>
+  </label>
+
+  <div *ngIf='user; else notFound'>
+    <p>Пользователь: {{user.name}}</p>
+    <button mat-button color='primary' (click)="addProjectToUser()">Добавить пользователя</button>
+  </div>
+  <ng-template #notFound><br/>Не найдено.</ng-template>
+
+</div>

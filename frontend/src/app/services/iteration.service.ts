@@ -18,22 +18,32 @@ export class IterationService {
     return this.http.get(`${this.url}/iterations/${id}`);
   }
 
-  createIteration(prId, title, description) {
+  createIteration(prId, title, description, goal, finishDate) {
+    // Состояние установится на back в 'new'
     const iteration = {
     _parent: prId,
     title,
     description,
-    cards: []
+    goal,
+    cards: [],
+    finishDate
     };
     return this.http.post(`${this.url}/iterations`, iteration);
   }
 
-  updateIteration(id, title, description) {
+  updateIteration(id, title, description, goal, state, finishDate) {
     const iteration = {
       title,
-      description
+      description,
+      goal,
+      state,
+      finishDate
     };
     return this.http.put(`${this.url}/iterations/${id}`, iteration);
+  }
+
+  createSummary(id, summary) {
+    return this.http.put(`${this.url}/iterations/summary/${id}`, { summary });
   }
 
   deleteIteration(itId) {

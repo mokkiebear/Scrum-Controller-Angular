@@ -8,15 +8,23 @@
     <br>
     <form [formGroup]='createIterationForm' class='create-form'>
       <mat-form-field class='field-full-width'>
-        <input matInput placeholder='Название итерации' formControlName='title' #title>
+        <input matInput placeholder='Название итерации' formControlName='title' #title required>
       </mat-form-field>
       <br>
       <mat-form-field class='field-full-width'>
         <textarea matInput placeholder='Описание' formControlName='description' #description></textarea>
       </mat-form-field>
+      <br>
+      <mat-form-field class='field-full-width'>
+        <textarea matInput placeholder='Цель итерации' formControlName='goal' #goal required></textarea>
+      </mat-form-field>
+      <br>
+      <mat-form-field class='field-full-width'>
+          <input matInput type='date' placeholder='Дата завершения' formControlName='finishDate' #finishDate required>
+      </mat-form-field>
       <br><br>
       <button mat-raised-button color='accent' [routerLink]="['/project', id]">Назад</button>
-      <button type='submit' (click)='createIteration(title.value, description.value)' [disabled]='createIterationForm.pristine || createIterationForm.invalid' mat-raised-button color='primary'>Сохранить</button>
+      <button type='submit' (click)='createIteration(title.value, description.value, goal.value, finishDate.value)' [disabled]='createIterationForm.pristine || createIterationForm.invalid' mat-raised-button color='primary'>Сохранить</button>
     </form>
   </mat-card>
 </div>

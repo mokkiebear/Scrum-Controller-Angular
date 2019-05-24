@@ -24,7 +24,7 @@ export class ProjectService {
       title,
       description
     };
-    return this.http.post(`${this.url}/projects`, project/*, httpOptions*/);
+    return this.http.post(`${this.url}/projects`, project);
   }
 
   deleteProject(id) {

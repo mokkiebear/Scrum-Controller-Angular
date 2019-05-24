@@ -21,6 +21,7 @@ export class IterationViewComponent implements OnInit {
 
   cards: Card[];
 
+  // Массивы с карточками определенного типа
   todo = [];
   doing = [];
   done = [];
@@ -34,20 +35,25 @@ export class IterationViewComponent implements OnInit {
 
   ngOnInit() {
     this.isLoading = true;
+
     this.route.params.subscribe(params => {
       this.itId = params.id;
       this.iterationService.getIterationById(this.itId).subscribe(res => {
         this.iteration = res as Iteration;
       });
+
       this.fetchCards();
     });
   }
 
+  // Получение карточек
   fetchCards() {
     this.todo = [];
     this.doing = [];
     this.done = [];
     this.backLog = [];
+
+    // Заполнение массивов с карточками
     this.cardService.getCards(this.itId).subscribe(res => {
       this.cards = res as Card[];
       for (const card of this.cards) {
@@ -58,13 +64,13 @@ export class IterationViewComponent implements OnInit {
           case 'BackLog': this.backLog.push(card); break;
         }
       }
+
       this.isLoading = false;
     });
   }
 
+  // Перемещение карточек
   drop(event: CdkDragDrop<string[]>) {
-    this.isLoading = true;
-
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -73,26 +79,34 @@ export class IterationViewComponent implements OnInit {
                         event.previousIndex,
                         event.currentIndex);
     }
-    this.snackBar.open('Изменения сохраняются...', 'OK', { duration: 1000 });
   }
 
-  // This method save the state of card
+  // Сохранение состояния карточки
   save(event, item) {
     let state;
-    if (event.container.id.indexOf('0') !== -1) {
-      state = 'BackLog';
-    } else if (event.container.id.indexOf('1') !== -1) {
-      state = 'todo';
-    } else if (event.container.id.indexOf('2') !== -1) {
-      state = 'doing';
-    } else {
-      state = 'done';
-    }
+    if (event.previousContainer !== event.container) {
+      this.isLoading = true;
+      this.snackBar.open('Изменения сохраняются...', 'OK', { duration: 1000 });
+      item._parent = this.itId;
 
-    this.cardService.updateCard(item._id, item.title, item.description, state).subscribe(res => {
-      this.snackBar.open('Изменения сохранены!', 'OK', { duration: 1000 });
-      this.isLoading = false;
-    });
+      if (event.container.element.nativeElement.parentNode.id === 'BackLog') {
+        state = 'BackLog';
+        item._parent = '';
+      } else if (event.container.element.nativeElement.parentNode.id === 'todo') {
+        state = 'todo';
+      } else if (event.container.element.nativeElement.parentNode.id === 'doing') {
+        state = 'doing';
+      } else {
+        state = 'done';
+      }
+
+      this.cardService.updateCard(item._id, item.title, item.description, state, item._parent).subscribe(res => {
+        this.snackBar.open('Изменения сохранены!', 'OK', { duration: 1000 });
+        this.isLoading = false;
+      });
+
+
+    }
   }
 
   deleteCard(cardId) {

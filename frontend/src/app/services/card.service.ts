@@ -28,8 +28,11 @@ export class CardService {
     return this.http.post(`${this.url}/cards`, card);
   }
 
-  updateCard(id, title, description, state) {
+  updateCard(id, title, description, state, parent?) {
+    console.log(id);
+    console.log(parent);
     const card = {
+      _parent: parent,
       title,
       description,
       state

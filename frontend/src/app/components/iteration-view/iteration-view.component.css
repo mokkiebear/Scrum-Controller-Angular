@@ -118,3 +118,11 @@ mat-spinner{
   top: 50%;
 }
 
+.control{
+  text-align: center;
+}
+
+.control > button{
+  margin: 10px;
+}
+

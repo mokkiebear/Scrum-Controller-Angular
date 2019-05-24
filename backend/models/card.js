@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 
 const Card = mongoose.model('Card', new mongoose.Schema({
 	_parent: { type: String },
+	_projectId: { type: String },
 	title: {
 		type: String,
 		required: true,
@@ -19,7 +20,7 @@ const Card = mongoose.model('Card', new mongoose.Schema({
 
 function validateCard(card) {
 	const schema = { 
-		_parent: Joi.string(), 
+		_parent: Joi.string().allow(''), 
 		title: Joi.string().min(3).required(), 
 		description: Joi.string().allow(''), 
 		storyPoint: Joi.number().min(1).max(20) , 

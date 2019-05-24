@@ -7,13 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(private authService: AuthService){}
-  title = 'angular-project';
-  isAuthenticated: Boolean = localStorage.getItem('token') ? true : false;
-  user = this.authService.getUser();
-  onLogout(){
-    this.authService.logout();
-  }
-
   
 }

@@ -1,29 +1,60 @@
 <div *ngIf="project">
-  <p>Проект: {{ project.title }}</p>
-
-  <button mat-raised-button color='primary' [routerLink]="['/iterations', 'create', prId]">
-    Создать итерацию
-  </button>
-  <button mat-raised-button color='warn' routerLink='/projects'>Назад</button>
-  <br />
-  <div *ngIf="iterations.length > 0; then iterationsList else noIterations"></div>
+  <mat-card>
+    <button mat-raised-button color='accent' routerLink='/projects'>
+      <mat-icon>arrow_back</mat-icon>
+      <span>Вернуться назад</span>
+    </button>
+    <br><br>
+    <mat-divider></mat-divider>
+    <h2>Название проекта: {{ project.title }}</h2>
+    <h4>Описание проекта: {{ project.description }}</h4>
+    <mat-divider></mat-divider>
+    <br>
+    <button mat-mini-fab color='primary' [routerLink]="['/iterations', 'create', prId]" matTooltip='Создать новую итерацию' style='margin: 0 10px;'>
+      <mat-icon>add</mat-icon>
+    </button>
+    <br><br>
+    <mat-divider></mat-divider>
+    <br>
+    <div *ngIf="iterations.length > 0; then iterationsList else noIterations"></div>
+    <app-add-user-to-project class='mat-card'></app-add-user-to-project>
+  </mat-card>
+  
 </div>
 
 <ng-template #iterationsList>
   <mat-card class='mat-card'>
-    <mat-card *ngFor='let it of iterations; let i = index' class='mat-card-iter'>
+    <h3>Итерации проекта</h3>
+    <mat-card *ngFor='let it of iterations; let i = index' class='mat-card-iter mat-elevation-z8'>
       <button mat-button color='primary' class='mat-card-iter-header' (click)="openIteration(it._id)">Итерация {{ i +
-        1 }}: {{ it.title }}</button>
+        1 }}: {{ it.title }}<span style='color: red; text-transform: uppercase; '> ({{ it.state }})</span></button>
       <p class='mat-card-iter-descr'><b>Описание итерации:</b> {{ it.description }}</p>
+      <p class='mat-card-iter-goal'><b>Цель итерации:</b> {{ it.goal }}</p>
+      
+      <div><p class='mat-card-iter-summary' *ngIf="it.state === 'completed' && it.summary === undefined; then emptySummary"></p></div>
+      <p class='mat-card-iter-summary' *ngIf='it.summary'><b>Итоги итерации:</b> {{ it.summary }}</p>
+      <ng-template #emptySummary>
+        <mat-form-field>
+          <textarea matInput placeholder='Итоги итерации' #summary></textarea>
+        </mat-form-field>
+        <button mat-raised-button color='accent' style='width: 20px; height: 40px;'><i class="material-icons" (click)='confirmSummary(it._id, summary.value)'>done</i></button>
+      </ng-template>
+      
+      <div class='mat-card-iter-dates'>
+        <p><b>Создано: </b>{{ it.date | date: "dd MMMM yyyy" }}</p>
+        <p><b>Начато: </b>{{ it.startDate | date: "dd MMMM yyyy" }}</p>
+        <p><b>Завершить до: </b>{{ it.finishDate | date: "dd MMMM yyyy" }} </p>   
+      </div>
       <div class='mat-card-iter-actions'>
-        <button mat-button color='primary' (click)="editIteration(it._id)">Изменить</button>
+        <button mat-raised-button color='primary' (click)="changeStateOfIteration(it._id, 'doing')" *ngIf='it.state === "new"'>Начать</button>
+        <button mat-raised-button color='primary' (click)="changeStateOfIteration(it._id, 'completed')" *ngIf='it.state === "doing"'>Завершить</button>
+        <button mat-raised-button color='accent' (click)="editIteration(it._id)">Изменить</button>
         <button mat-raised-button color='warn' (click)="deleteIteration(it._id)">Удалить</button>
       </div>
-      <p class='mat-card-iter-date'><b>Дата создания: </b>{{ it.date | date: "dd MMMM yyyy" }}</p>
     </mat-card>
   </mat-card>
 </ng-template>
 
 <ng-template #noIterations>
-  У данного проекта не создано итераций.
+  Итерации проекта не найдены.
 </ng-template>

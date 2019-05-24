@@ -19,6 +19,7 @@ module.exports = function(){
     });*/
 
     winston.exceptions.handle(new winston.transports.File({ filename: 'uncaughtExceptions.log' }));
+    winston.exceptions.handle(new winston.transports.Console({ colorize: true, prettyPrint: true }));
 
     process.on('unhandledRejection', (ex) => {
     /*logger.error(ex.message, ex);
@@ -31,7 +32,7 @@ module.exports = function(){
         next(createError(404));
     });
     
-        // error handler
+    // error handler
     app.use(function(err, req, res, next) {
         logger.log('error', err.message, err);
         // set locals, only providing error in development

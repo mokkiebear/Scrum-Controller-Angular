@@ -22,13 +22,13 @@ const userSchema = new mongoose.Schema({
 		required: true,
 		minlength: 5,
 		maxlength: 1024
-	}/*,
-	isAdmin: Boolean*/
+	},
+	projects: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Project' }]
 });
 
 userSchema.methods.generateAuthToken = function() {
 	console.log(config.get('jwtPrivateKey'));
-	const token = jwt.sign({ _id: this._id }, config.get('jwtPrivateKey'), {expiresIn: '1h'});
+	const token = jwt.sign({ _id: this._id, email: this.email }, config.get('jwtPrivateKey'), {expiresIn: '10d'});
 	return token;
 };
 

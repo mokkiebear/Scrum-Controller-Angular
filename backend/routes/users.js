@@ -7,12 +7,23 @@ const _ = require('lodash');
 const bcrypt = require('bcrypt');
 
 
-router.get('/', async function (req, res) {
-	const users = await User.find().sort('name');
-	console.log(users);
-	res.render('users', { "data": users });
+// Получения пользователя по email
+router.get('/:email', async function(req, res) {
+	const user = await User.findOne({ email: req.params.email });
+	res.json(_.pick(user, ['_id', 'name', 'email']));
 });
 
+// Добавление проекта пользователю
+router.put('/', async function(req, res) {
+	const projectId = req.body.projectId;
+	const userId = req.body.userId;
+	console.log(projectId);
+	console.log(userId);
+	const user = await User.findOneAndUpdate({ _id: userId }, { $addToSet: { projects: projectId } }, {new: true});
+	res.json(user);
+});
+
+// Создание новых пользователей
 router.post('/', async (req, res, next) => {
 	const { error } = validate(req.body);
 	if (error) return res.status(400).send(error.details[0].message);

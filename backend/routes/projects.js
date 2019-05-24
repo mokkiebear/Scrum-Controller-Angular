@@ -3,14 +3,18 @@ const auth = require('../middleware/auth');
 const router = require('express').Router();
 const mongoose = require('mongoose');
 const { Project, validate } = require('../models/project');
+const { User } = require('../models/user');
+const { Card } = require('../models/card');
 const { Iteration } = require('../models/iteration');
 
-
-router.get('/', async function (req, res) {
-	const projects = await Project.find().sort('title');
+// Получение проектов пользователя
+router.get('/', auth, async function (req, res) {
+	const user = await User.findOne({ _id: req.user._id });
+	const projects = await Project.find({ _id: { $in: user.projects } }).sort('title');
 	res.json(projects);
 });
 
+// Создание проекта
 router.post('/', auth, async function (req, res) {
 	const { error } = validate(req.body);
 	if (error) return res.status(400).send(error.details[0].message);
@@ -20,7 +24,9 @@ router.post('/', auth, async function (req, res) {
 		iterations: [] 
 	});
 	project = await project.save();
-	res.json('Добавлено!');
+	// Добавление проекта пользователю
+	await User.findOneAndUpdate({ _id: req.user._id }, { $push: { projects: project._id } });
+	res.json(project);
 });
 
 router.get('/:id', async function (req, res) {
@@ -31,7 +37,7 @@ router.get('/:id', async function (req, res) {
 });
 
 //Изменение проекта
-router.put('/:id', async function (req, res) {
+router.put('/:id', auth, async function (req, res) {
 	//Validate - If invalid, return 400 - Bad Request
 	const { error } = validate(req.body);
 	if (error) return res.status(400).send(error.details[0].message);
@@ -42,19 +48,25 @@ router.put('/:id', async function (req, res) {
 	//return res.status(404).send('The project with the given ID was not found');	
 });
 
-router.delete('/:id', async function (req, res) {
+// Удаление проекта
+router.delete('/:id', auth, async function (req, res) {
+	// Находим и удаляем проект
 	const project = await Project.findOneAndDelete({ _id: req.params.id });
 	//Удаление итераций объекта
-	await Iteration.deleteMany({ _id: { $in: project.iterations} });
-	//await Iteration.deleteMany({ _parent: req.params.id });
-	res.send(project);
+	await Iteration.deleteMany({ _id: { $in: project.iterations } });
+	// Удаление карточек проекта (в том числе BackLog)
+	await Card.deleteMany({ _projectId: project._id });
+	// Удаление этого проекта из проектов, доступных пользователям
+	await User.updateMany({ projects: project._id }, { $pull: { projects: project._id } });
+	res.json(project);
 		//return res.status(404).send('The project with the given ID was not found');
 });
 
 //Получение итераций в рамках проекта
-router.get('/:prId/iterations/', async function(req, res){
+router.get('/:prId/iterations/', auth, async function(req, res){
 	const project = await Project.findOne({ _id: req.params.prId });
-	let iterations = await Iteration.find({ _id: { $in:  project.iterations } });
+	// Данные отсортированы по состоянию: completed -> doint -> new, и по дате завершения
+	const iterations = await Iteration.find({ _id: { $in:  project.iterations } }).sort({ state: 1, finishDate: 1 });
 	res.json(iterations);
 		//return res.status(404).send('The project with the given ID was not found' + err.message);
 	

@@ -1,10 +1,4 @@
-<mat-toolbar>
-  <span>Angular 7 - SCRUM Controller</span>
-  <a routerLink='/projects'>Проекты</a>
-  <a routerLink='/signin' *ngIf='!isAuthenticated'>Войти</a>
-  <a routerLink='/signup' *ngIf='!isAuthenticated'>Зарегистрироваться</a>
-  <button mat-button (click)='onLogout()' *ngIf='isAuthenticated'>Выйти</button>
-</mat-toolbar>
+<app-header></app-header>
 
 
 <div>

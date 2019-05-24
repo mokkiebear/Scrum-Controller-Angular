@@ -45,7 +45,7 @@ export class EditCardComponent implements OnInit {
     });
   }
 
-  updateCard(title, description){
+  updateCard(title, description) {
     this.cardServise.updateCard(this.id, title, description, this.card.state).subscribe(res => {
       this.snackBar.open('Итерация успешно изменена!', 'OK', {
         duration: 2000

@@ -3,25 +3,29 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-
-import { MatToolbarModule, 
-         MatFormFieldModule, 
-         MatInputModule, 
-         MatOptionModule, 
-         MatSelectModule, 
-         MatIconModule, 
-         MatButtonModule, 
-         MatCardModule, 
-         MatTableModule, 
-         MatDividerModule, 
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatToolbarModule,
+         MatFormFieldModule,
+         MatInputModule,
+         MatOptionModule,
+         MatSelectModule,
+         MatIconModule,
+         MatButtonModule,
+         MatCardModule,
+         MatTableModule,
+         MatDividerModule,
          MatSnackBarModule,
-         MatMenuModule } from '@angular/material';
+         MatMenuModule,
+         MatListModule,
+         MatSidenavModule,
+         MatTooltipModule,
+         MatDialogModule,
+         MatPaginatorModule,
+         MatSortModule } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CreateComponent } from './components/projects/create/create.component';
-import { EditComponent } from './components/projects/edit/edit.component';
 
 import { CreateIterationComponent } from './components/iterations/create/create.component';
 import { EditIterationComponent } from './components/iterations/edit/edit.component';
@@ -37,13 +41,16 @@ import { SignupComponent } from './components/auth/signup/signup.component';
 import { SigninComponent } from './components/auth/signin/signin.component';
 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { HeaderComponent } from './components/header/header.component';
+import { AddUserToProjectComponent } from './components/add-user-to-project/add-user-to-project.component';
+import { WelcomeComponent } from './components/welcome/welcome.component';
+import { AddProjectComponent } from './components/projects/add-project/add-project.component';
+import { EditProjectComponent } from './components/projects/edit-project/edit-project.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    CreateComponent,
-    EditComponent,
     ProjectsListComponent,
     ProjectViewComponent,
     CreateIterationComponent,
@@ -52,7 +59,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     CreateCardComponent,
     EditCardComponent,
     SignupComponent,
-    SigninComponent
+    SigninComponent,
+    HeaderComponent,
+    AddUserToProjectComponent,
+    WelcomeComponent,
+    AddProjectComponent,
+    EditProjectComponent
   ],
   imports: [
     BrowserModule,
@@ -62,21 +74,29 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     ReactiveFormsModule,
     FormsModule,
     MatToolbarModule,
-    MatFormFieldModule, 
-    MatInputModule, 
-    MatOptionModule, 
-    MatSelectModule, 
-    MatIconModule, 
-    MatButtonModule, 
-    MatCardModule, 
-    MatTableModule, 
-    MatDividerModule, 
+    MatFormFieldModule,
+    MatInputModule,
+    MatOptionModule,
+    MatSelectModule,
+    MatIconModule,
+    MatButtonModule,
+    MatCardModule,
+    MatTableModule,
+    MatDividerModule,
     MatSnackBarModule,
     MatMenuModule,
     DragDropModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatListModule,
+    MatSidenavModule,
+    FlexLayoutModule,
+    MatTooltipModule,
+    MatDialogModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [AddProjectComponent, EditProjectComponent]
 })
 export class AppModule { }
