@@ -103,9 +103,12 @@ export class ProjectsListComponent implements OnInit, AfterViewInit {
   }
 
   deleteProject(id) {
-    this.projectService.deleteProject(id).subscribe(() => {
-      this.fetchProjects();
-    });
+    if(confirm('Вы уверены, что вы хотите удалить этот проект?')){
+      this.projectService.deleteProject(id).subscribe(() => {
+        this.fetchProjects();
+      });
+    }
+    
   }
 
   formatDate(date) {

@@ -36,16 +36,19 @@
 
     <mat-sidenav-content>
         <mat-toolbar color="primary">
-            <div fxHide.gt-xs>
+            <div fxHide.gt-md>
                 <button mat-icon-button (click)="sidenav.toggle()">
                     <mat-icon>menu</mat-icon>
                 </button>
             </div>
             <div>
-                <a>Управление проектами</a>
+                <a>
+                    <mat-icon class="icon" style='padding-left: 10px;'>dvr</mat-icon>
+                    <span class='label'>__scrumboard_app</span>
+                </a>
             </div>
-            <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
-                <ul fxLayout fxLayoutGap="15px" class="navigation-items"> 
+            <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.lt-md>
+                <ul fxLayout class="navigation-items"> 
                     <li>
                         <a routerLink='/'>
                             <mat-icon class="icon">home</mat-icon>
@@ -59,7 +62,10 @@
                         </a>
                     </li>
                     <li *ngIf='currentUser'>
-                        <span>Пользователь: {{ currentUser.name }}</span>
+                            <a>
+                                <mat-icon class="icon">person</mat-icon>
+                                <span class="label">{{ currentUser.name }}</span>
+                            </a>
                     </li>
                     <ng-template #notLoggedIn>
                         <li>
@@ -84,7 +90,5 @@
                 </ul>
             </div>
         </mat-toolbar>
-        <main>
-        </main>
     </mat-sidenav-content>
 </mat-sidenav-container>
