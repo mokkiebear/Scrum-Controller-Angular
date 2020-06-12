@@ -17,7 +17,7 @@ import { CreateCardComponent } from './components/iteration-view/create/create.c
 import { EditCardComponent } from './components/iteration-view/edit-card/edit-card.component';
 
 const routes: Routes = [
-  {path: '', component: WelcomeComponent},
+  {path: 'home', component: WelcomeComponent},
   // Get the list of projects
   { path: 'projects', component: ProjectsListComponent, canActivate: [AuthGuard] },
   // View the selected project (id of project)

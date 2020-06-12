@@ -11,3 +11,7 @@ mat-form-field{
 mat-spinner{
     margin: auto;
 }
+
+mat-icon {
+    margin-right: 0.5em;
+}

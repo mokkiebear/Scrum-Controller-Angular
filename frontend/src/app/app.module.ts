@@ -6,6 +6,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatToolbarModule,
          MatFormFieldModule,
+         MatExpansionPanel,
          MatInputModule,
          MatOptionModule,
          MatSelectModule,
@@ -21,7 +22,8 @@ import { MatToolbarModule,
          MatTooltipModule,
          MatDialogModule,
          MatPaginatorModule,
-         MatSortModule } from '@angular/material';
+         MatSortModule, 
+         MatExpansionModule} from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -93,7 +95,8 @@ import { EditProjectComponent } from './components/projects/edit-project/edit-pr
     MatTooltipModule,
     MatDialogModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatExpansionModule,
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent],

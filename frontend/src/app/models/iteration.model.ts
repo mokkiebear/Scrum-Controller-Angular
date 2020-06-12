@@ -7,6 +7,9 @@ export interface Iteration {
     description: string;
     goal: string;
     state: string;
+    summary?: string;
     cards: [Card];
+    date?: Date;
+    startDate?: Date;
     finishDate: Date;
 }

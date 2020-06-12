@@ -6,13 +6,13 @@
   <form (submit)='onLogin(loginForm)' *ngIf='!isLoading' #loginForm='ngForm'>
     <mat-form-field>
       <input matInput name='email' ngModel type='email' placeholder='Электронный адрес' #emailInput='ngModel' required email>
-      <mat-error *ngIf='emailInput.invalid'>Please enter a valid E-Mail.</mat-error>
+      <mat-error *ngIf='emailInput.invalid'>Введите корректный Email адрес.</mat-error>
     </mat-form-field>
     <mat-form-field>
       <input matInput name='password' ngModel type='password' placeholder='Пароль' #passwordInput='ngModel' required>
-      <mat-error *ngIf='passwordInput.invalid'>Please enter a valid password.</mat-error>
+      <mat-error *ngIf='passwordInput.invalid'>Введите корректный пароль.</mat-error>
     </mat-form-field>
-    <button type='submit' mat-raised-button color='accent'>
+    <button type='submit' mat-raised-button color='primary'>
       <mat-icon>input</mat-icon>
       <span>Войти</span>
     </button>

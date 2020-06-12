@@ -5,51 +5,36 @@
 
 .mat-card-iter{
   margin: 10px auto;
-  display: grid;
   padding: 10px;
-  grid-gap: 10px;
   width: 90%;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(6, auto);
 }
 
 .mat-card-iter-header{
   font-size: 1.2em;
+  font-weight: bold;
   color: black;
-  grid-column: 1 / -1;
-  grid-row: 1 / 2;
   white-space: normal;
 }
 
 .mat-card-iter-descr{
   font-size: 0.9em;
-  grid-column: 1 / -1;
-  grid-row: 2 / 3;
 }
 
 .mat-card-iter-goal {
   font-size: 0.9em;
-  grid-column: 1 / -1;
-  grid-row: 3 / 4;
 }
 
 .mat-card-iter-summary {
   font-size: 0.9em;
-  grid-column: 1 / 4;
-  grid-row: 4 / 5;
 }
 
 .mat-card-iter-dates {
   font-size: 0.9em;
-  grid-column: 4 / -1; 
-  grid-row: 4 / -1;
 }
 
 .mat-card-iter-actions{
   justify-self: center;
   align-self: center;
-  grid-column: 2 / span 2;
-  grid-row: 5 / -1;
 }
 
 .mat-card-iter-actions > button{
